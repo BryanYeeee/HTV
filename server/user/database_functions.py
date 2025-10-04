@@ -9,8 +9,9 @@ client = MongoClient(uri)
 db = client["selfPharma"]
 user = db["user"]
 
+
 def upload_user(username, password):
-    user.insert_one({"username": username, "password": password, "medicines":[]})
+    user.insert_one({"username": username, "password": password, "medicines": []})
 
 
 def check_user(username):
@@ -19,8 +20,11 @@ def check_user(username):
         return result["password"]
     return None
 
-def upload_medicine(username, medicine_name, amount, schedule:list[str], dose, threshold):
-    user.update_one({"username": username}, {'$push': {"medicines": [{"name":medicine_name, "amount": amount, "schedule":schedule, "dose":dose, "threshold":threshold}]}})
+
+def upload_drug(username, drugname, amount, description, schedule: list[str], dose, threshold):
+    user.update_one({"username": username}, {'$push': {
+        "medicines": {"drugname": drugname, "amount": amount, "description": description, "schedule": schedule,
+                      "dose": dose, "threshold": threshold}}})
 
 
 def get_medicines(username):

@@ -30,6 +30,10 @@ def check_pharma(username):
     return None
 
 
+def decrease_stock(username, drugname, amount):
+    pharmacy.update_one({"username": username, "stock.drugname": drugname}, {"$inc": {"stock.$.amount": -amount}})
+
+
 def increase_stock(username, drugname):
     if not check_pharma(username):
         return None
@@ -40,13 +44,25 @@ def increase_stock(username, drugname):
         pharmacy.update_one({"username": username}, {"$push": {"stock": {"drugname": drugname, "amount": 100}}})
 
 
-def approve_order(id) -> bool:
+def approve_order(id: str):
     result = get_order(id)
+    if not result:
+        return False
+
     username = result["username"]
     drugname = result["drugname"]
     amount = result["amount"]
     description = result["description"]
     schedule = result["schedule"]
     dose = result["dose"]
-    threshold = int(len(schedule)/7) * 3
-    return upload_drug(username, drugname, amount, description, schedule, dose, threshold)
+
+    days = {entry.split("_")[0] for entry in schedule}
+    total_entries = len(schedule)
+    doses_per_day = total_entries / len(days) if days else 1
+
+    # Set threshold = 3 days of doses
+    threshold = int(doses_per_day * 3)
+
+    upload_drug(username, drugname, amount, description, schedule, dose, threshold)
+    decrease_stock(username, drugname, amount)
+    return True
