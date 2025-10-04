@@ -30,10 +30,10 @@ def check_user(username):
     return None
 
 
-def upload_drug(username, drugname, amount, description, schedule: list[str], dose, threshold):
+def upload_drug(username, input:dict, threshold):
     user.update_one({"username": username}, {'$push': {
-        "drugs": {"drugname": drugname, "amount": amount, "description": description, "schedule": schedule,
-                      "dose": dose, "threshold": threshold}}})
+        "drugs": {"drugname": input["name"], "amount": input["count"], "description": input["description"], "schedule": input["schedule"],
+                      "dose": input["dosage"], "threshold": threshold, "properties": input["property"]}}})
 
 
 def get_drugs(username):
