@@ -1,5 +1,5 @@
 from argon2 import PasswordHasher
-from .database_functions import upload_user, check_user
+from database_functions import upload_user, check_user
 
 
 phash = PasswordHasher()

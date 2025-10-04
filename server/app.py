@@ -1,10 +1,13 @@
 from user.user import user
 from pharma.pharma import pharma
+from order.order import order
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 app.register_blueprint(user, url_prefix="/user")
 app.register_blueprint(pharma, url_prefix="/pharma")
+app.register_blueprint(order, url_prefix="/order")
+
 
 @app.route("/")
 def index():

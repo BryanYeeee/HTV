@@ -6,7 +6,7 @@ pharma = Blueprint("pharma", __name__)
 
 @pharma.route("/")
 def user_index():
-    return "hello user"
+    return "hello pharma"
 
 
 @pharma.route("/login")

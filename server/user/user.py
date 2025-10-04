@@ -1,5 +1,5 @@
 from .hasher import h_login, h_signup
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 user = Blueprint("user", __name__)
 
@@ -31,6 +31,21 @@ def signup():
     return jsonify({"response": "good signup"})
 
 
+@user.route("/new_order", methods=["POST"])
 def send_prescription():
-    return
+    # recieves image in mime type
+
+    if "file" not in request.files:
+        return "No file uploaded", 400
+
+    file = request.files["file"]
+    # Check mimetype (e.g., "image/jpeg", "image/png")
+    mimetype = file.mimetype
+    filename = file.filename
+
+    # Save the file if you want
+    file.save(f"./uploads/{filename}")
+
+    return {"filename": filename, "mimetype": mimetype}, 200
+
 

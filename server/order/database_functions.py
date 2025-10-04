@@ -17,15 +17,21 @@ client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 db = client["selfPharma"]
 order = db["orders"]
 
+
 def delete():
+    # only for testing
     order.delete_many({})
 
+
 def upload_order(username, drugname, amount, description, schedule: list[str], dose, color):
+    # create a new order
     result = order.insert_one({"username": username, "drugname": drugname, "amount": amount, "description": description,
-                      "schedule": schedule, "dose":dose, "color":color})
+                               "schedule": schedule, "dose": dose, "color": color})
     return str(result.inserted_id)
 
+
 def get_order(id):
+    # gets a specific order - can be used to approve orders?
     try:
         obj_id = ObjectId(id)  # convert string → ObjectId
     except Exception as e:
@@ -33,4 +39,10 @@ def get_order(id):
         return None
 
     result = order.find_one({"_id": obj_id})
+    return result
+
+
+def get_orders():
+    # list of all orders
+    result = order.find({})
     return result
