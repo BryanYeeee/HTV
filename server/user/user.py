@@ -1,8 +1,7 @@
-from .database_functions import upload_drug
+from .database_functions import upload_drug, confirm_order
 from .hasher import h_login, h_signup
 from flask import Blueprint, jsonify, request
 from .ocr import parse_text
-
 
 user = Blueprint("user", __name__)
 
@@ -36,25 +35,30 @@ def signup():
 
 @user.route("/new_order", methods=["POST"])
 def send_prescription():
-    # recieves image in mime type
-
-    if "file" not in request.files:
-        return "No file uploaded", 400
-
-    file = request.files["file"]
-    # Check mimetype (e.g., "image/jpeg", "image/png")
-    mimetype = file.mimetype
-    filename = file.filename
-
-    # Save the file if you want
-    file.save("./prescription.png")
+    # # recieves image in mime type
+    #
+    # if "file" not in request.files:
+    #     return "No file uploaded", 400
+    #
+    # file = request.files["file"]
+    # # Check mimetype (e.g., "image/jpeg", "image/png")
+    # mimetype = file.mimetype
+    # filename = file.filename
+    #
+    # # Save the file if you want
+    # file.save("./prescription.png")
     response = parse_text()
 
     for drug in response:
-        upload_drug()
+        upload_drug("riyan", drug, 10)
+
+    return "good"
+    # return {"filename": filename, "mimetype": mimetype}, 200
 
 
-
-    return {"filename": filename, "mimetype": mimetype}, 200
-
-
+@user.route("/confirm_order", methods=["POST"])
+def change_user_tag():
+    data = request.get_json()
+    username = data["username"]
+    confirm_order(username)
+    return "GREAT"

@@ -1,5 +1,6 @@
 from .hasher import h_login, h_signup
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
+import requests
 
 pharma = Blueprint("pharma", __name__)
 
@@ -11,26 +12,27 @@ def user_index():
 
 @pharma.route("/login")
 def login():
-    # TODO: update the variables with request parameters
-    username = ""
-    password = ""
-    # verify = h_login(username, password)
-    # if verify:
-    #     response = jsonify({"response": "good login"})
-    #     return response
-
-    response = jsonify({"response": "bad login"})
+    data = request.get_json()
+    username, password = data["username"], data["password"]
+    h_login(username, password)
+    response = jsonify({"response": "good login"})
     return response
 
 
-@pharma.route("/signup")
+@pharma.route("/signup", methods=["POST"])
 def signup():
-    # TODO: update the variables with request parameters
-    username, password = "", ""
+    data = request.get_json()
+    username, password = data["username"], data["password"]
     h_signup(username, password)
     return jsonify({"response": "good signup"})
 
 
-def send_prescription():
+@pharma.route("/approve", methods=["POST"])
+def approve_order():
+    data = request.get_json()
+    order_id = data["order_id"]
+    requests.post("http://localhost:8080/order/")
+
+
     return
 

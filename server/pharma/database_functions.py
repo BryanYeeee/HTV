@@ -1,5 +1,5 @@
-from server.order.database_functions import get_order
-from server.user.database_functions import upload_drug
+# from server.order.database_functions import get_order
+# from server.user.database_functions import upload_drug
 import certifi
 from pymongo import MongoClient
 import os
@@ -46,23 +46,23 @@ def increase_stock(username, drugname):
         pharmacy.update_one({"username": username}, {"$push": {"stock": {"drugname": drugname, "amount": 100}}})
 
 
-def approve_order(id: str):
-    result = get_order(id)
-    if not result:
-        return False
-
-    username = result["username"]
-    drugname = result["drugname"]
-    amount = result["amount"]
-    schedule = result["schedule"]
-
-    days = {entry.split("_")[0] for entry in schedule}
-    total_entries = len(schedule)
-    doses_per_day = total_entries / len(days) if days else 1
-
-    # Set threshold = 3 days of doses
-    threshold = int(doses_per_day * 3)
-
-    upload_drug(username, result, threshold)
-    decrease_stock(username, drugname, amount)
-    return True
+# def approve_order(id: str):
+#     result = get_order(id)
+#     if not result:
+#         return False
+#
+#     username = result["username"]
+#     drugname = result["drugname"]
+#     amount = result["amount"]
+#     schedule = result["schedule"]
+#
+#     days = {entry.split("_")[0] for entry in schedule}
+#     total_entries = len(schedule)
+#     doses_per_day = total_entries / len(days) if days else 1
+#
+#     # Set threshold = 3 days of doses
+#     threshold = int(doses_per_day * 3)
+#
+#     upload_drug(username, result, threshold)
+#     decrease_stock(username, drugname, amount)
+#     return True

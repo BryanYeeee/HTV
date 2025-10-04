@@ -8,7 +8,7 @@ load_dotenv('../.env')
 reader = easyocr.Reader(['en'])
 
 # Run OCR on an image
-results = reader.readtext('prescription.png')
+results = reader.readtext('./user/prescription.png')
 
 # Print out detected text
 ocr_text = ""
@@ -70,7 +70,3 @@ def parse_text():
     response = json.loads(text)
 
     return response
-
-r = parse_text()
-
-print(r)
