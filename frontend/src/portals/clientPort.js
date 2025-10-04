@@ -27,6 +27,7 @@ import OrderForm from '@/components/orderForm'
 
 const ClientPort = () => {
   const [leftIndex, setLeftIndex] = useState(0)
+  const [rightIndex, setRightIndex] = useState(0)
   const [curDrug, setCurDrug] = useState({
     name: 'ABC',
     description: 'cures from liver eating amoeba',
@@ -66,21 +67,50 @@ const ClientPort = () => {
         </div>
         <Switcher activeIndex={leftIndex} axis='y' className='w-full h-full'>
           {[
-            <TimeTable
-              numRows={18}
-              onDrugClick={setCurDrug}
+            <TimeTable numRows={18} onDrugClick={setCurDrug} />,
+            <Table
+              data={tempData}
+              onRowClick={setCurDrug}
+              className='h-full'
             />,
-            <Table data={tempData} onRowClick={setCurDrug} className='h-full' />,
             <OrderForm />
           ]}
         </Switcher>
       </div>
-      <div className='h-full w-1/3 border p-8'>
-        <section className='flex flex-col items-center space-y-4'>
-          <div className='border h-20 w-15'>PILL MODEL</div>
-          <div>{curDrug.name}</div>
-          <div>{curDrug.description}</div>
-        </section>
+      <div className='h-full w-1/3 border'>
+        <div className='flex gap-4 py-2 justify-between'>
+          <div onClick={() => setLeftIndex(1)}>
+            <HeartMonitorButton
+              text='View Drugs'
+              disabled={leftIndex == 1}
+              color='#ff6b6b'
+              className='w-40'
+            />
+          </div>
+          <div onClick={() => setLeftIndex(0)}>
+            <HeartMonitorButton
+              text='View Schedule'
+              disabled={leftIndex == 0}
+              color='#ff6b6b'
+              className='w-40'
+            />
+          </div>
+        </div>
+        <Switcher activeIndex={rightIndex} axis='y' className='w-full h-full'>
+          {[
+            <section className='h-full border p-8 flex flex-col items-center space-y-4'>
+              <div className='border h-20 w-15'>PILL MODEL</div>
+              <div>{curDrug.name}</div>
+              <div>{curDrug.description}</div>
+            </section>,
+
+            <section className='h-full border p-8 flex flex-col items-center space-y-4'>
+              <div className='border h-20 w-15'>PILL MODEL</div>
+              <div>{curDrug.name}</div>
+              <div>{curDrug.description}</div>
+            </section>
+          ]}
+        </Switcher>
       </div>
     </div>
   )
