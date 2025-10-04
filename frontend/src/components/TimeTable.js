@@ -32,15 +32,41 @@ const TIME = [
 
 export default function TimeTable ({
   data = [
-    [
-      {},
-      { name: 'A', model: ['rgb(114, 208, 124)'] },
-      { name: 'C', model: ['rgb(144, 238, 144)'] },
-      {},
-      {},
-      {},
-      {}
-    ],
+    {
+      name: 'A',
+      model: ['rgb(114, 208, 124)'],
+      schedules: ['0_1300', '2_1300', '4_1300', '2_1600']
+    },
+    {
+      name: 'C',
+      model: ['rgb(144, 038, 144)'],
+      schedules: ['1_1400', '3_1400', '5_1400']
+    },
+    {
+      name: 'D',
+      model: ['rgb(255, 182, 193)'],
+      schedules: [
+        '0_0700',
+        '1_0700',
+        '2_0700',
+        '3_0700',
+        '4_0700',
+        '5_0700',
+        '6_0700'
+      ]
+    },
+    // {
+    //   name: 'E',
+    //   model: ['rgb(144, 255, 144)'],
+    //   schedules: ['4_0900', '4_0800', '4_2400', '4_2300']
+    // }
+  ],
+  columns = null,
+  className = '',
+  numRows = 18,
+  onDrugClick
+}) {
+  const timeData = [
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
@@ -48,8 +74,9 @@ export default function TimeTable ({
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
-    [{ name: 'D', model: ['rgb(255, 182, 193)'] }, {}, {}, {}, {}, {}, {}],
-    [{}, {}, {}, { name: 'E', model: ['rgb(144, 238, 144)'] }, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
@@ -58,12 +85,22 @@ export default function TimeTable ({
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}]
-  ],
-  columns = null,
-  className = '',
-  numRows = 18,
-  onDrugClick
-}) {
+  ]
+
+  data.forEach(drug => {
+    drug.schedules.forEach(tslot => {
+      timeData[(parseInt(tslot.substring(2)) / 100) - 7][
+        parseInt(tslot.charAt(0))
+      ] = drug
+    })
+  })
+  // console.table(timeData)
+  // for(let i = 0; i < timeData.length; i++) {
+  //   for(let j = 0; j < timeData[0].length; j++) {
+  //     console.log(data[i][j],JSON.stringify(data[i][j]) === '{}')
+  //   }
+  // }
+
   return (
     <div className={`${className} text-sm`}>
       <div className='overflow-auto rounded-md' data-augmented-ui='both'>
@@ -97,15 +134,17 @@ export default function TimeTable ({
                     key={col + '-r-' + j}
                     className='px-1 py-2 align-top break-words max-w-[220px] relative '
                   >
-                    {renderCell(data[i][j], onDrugClick)}
+                    {renderCell(timeData[i][j], onDrugClick)}
                     <div
                       className={`flex items-center absolute w-4 top-0 left-1/2 h-full -translate-x-1/2 -z-1 ${
-                        TIME.length - 1 == i ? 'border-b-3 rounded-b-full border-fore2' : ''
+                        TIME.length - 1 == i
+                          ? 'border-b-3 rounded-b-full border-fore2'
+                          : ''
                       }`}
                       style={
-                        JSON.stringify(data[i][j]) === '{}'
+                        JSON.stringify(timeData[i][j]) === '{}'
                           ? { backgroundColor: 'var(--fore1)' }
-                          : { backgroundColor: data[i][j].model[0] }
+                          : { backgroundColor: timeData[i][j].model[0] }
                       }
                     ></div>
                   </td>

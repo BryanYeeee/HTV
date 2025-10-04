@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "augmented-ui": "^2.0.0",
+    "axios": "^1.12.2",
     "motion": "^12.23.22",
     "next": "15.5.4",
     "react": "19.1.0",

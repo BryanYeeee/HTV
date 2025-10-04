@@ -1,19 +1,13 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TimeTable from '@/components/TimeTable'
-import Graph from '@/components/graph'
 import { DiAptana } from 'react-icons/di'
 
-const tempData = [
-  { name: 'D', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
-  { name: 'A', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
-  { name: 'B', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
-  { name: 'C', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] }
-]
 import HeartMonitorButton from '@/components/heartButton'
 import Switcher from '@/components/switcher'
 import Table from '@/components/Table'
 import OrderForm from '@/components/orderForm'
+import request from '@/utils/request'
 
 const ClientPort = () => {
   const [leftIndex, setLeftIndex] = useState(0)
@@ -23,9 +17,31 @@ const ClientPort = () => {
     description: 'cures from liver eating amoeba',
     model: ['rgb(255, 182, 193)']
   })
+  const [drugData, setDrugData] = useState([
+    { name: 'D', remain: 120, 
+      schedules: [
+        '0_0700',
+        '1_0700',
+        '2_0700',
+        '3_0700',
+        '4_0700',
+        '5_0700',
+        '6_0700'
+      ], model: ['rgb(255, 182, 193)'] },
+    { name: 'A', remain: 120, schedules: ['1_1400', '3_1400', '5_1400'], model: ['rgb(114, 208, 124)'] },
+    { name: 'B', remain: 120, schedules: ['0_1300', '2_1300', '4_1300', '2_1600'], model: ['rgb(144, 255, 144)'] },
+    { name: 'C', remain: 120, schedules: [], model: ['rgb(255, 182, 193)'] }
+  ])
+
+  useEffect(() => {
+    // request
+    //   .get('/drugs')
+    //   .then(data => setDrugData(data))
+    //   .catch(err => console.error('Failed to fetch drugs:', err))
+  }, [])
 
   return (
-    <div className='bg flex justify-around items-center h-screen p-12 gap-12'>
+    <div className='bg flex justify-around items-center h-screen p-10 gap-12'>
       <div className='w-2/3 h-full flex flex-col'>
         <div className='flex gap-4 py-2 justify-between'>
           <div className='flex gap-4'>
@@ -57,9 +73,9 @@ const ClientPort = () => {
         </div>
         <Switcher activeIndex={leftIndex} axis='y' className='size-full'>
           {[
-            <TimeTable numRows={18} onDrugClick={setCurDrug} />,
+            <TimeTable data={drugData} numRows={18} onDrugClick={setCurDrug} />,
             <Table
-              data={tempData}
+              data={drugData}
               keys={['name', 'remain']}
               onRowClick={setCurDrug}
               className='h-full'

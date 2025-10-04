@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "http://localhost:8080";
 
 export default function request(api, method, data = {}) {
-  console.log(sessionStorage);
+  // console.log(sessionStorage);
 
   const authkey = sessionStorage.getItem("authkey") || "";
     data.authkey = authkey;
