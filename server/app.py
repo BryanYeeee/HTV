@@ -1,13 +1,15 @@
-from doctest import debug
-
-from flask import Flask
+from user.user import user
+from pharma.pharma import pharma
+from flask import Flask, jsonify
 
 app = Flask(__name__)
-
+app.register_blueprint(user, url_prefix="/user")
+app.register_blueprint(pharma, url_prefix="/pharma")
 
 @app.route("/")
 def index():
-    return "ni hao"
+    response = jsonify({"response": "hello"})
+    return response
 
 
 if __name__ == "__main__":
