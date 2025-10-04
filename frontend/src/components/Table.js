@@ -6,7 +6,6 @@ import HeartMonitorButton from '@/components/heartButton'
  * Example usage:
  *  <JsonTable data={users} initialPageSize={20} onRowClick={(r)=>console.log(r)} />
  */
-const numRows = 10
 
 export default function Table ({
   data = [],
@@ -15,6 +14,7 @@ export default function Table ({
   oddCol = 'fore2',
   hoverCol = 'accent1',
   className = '',
+  numRows = 10,
   onRowClick
 }) {
   const inferredColumns = useMemo(() => {
