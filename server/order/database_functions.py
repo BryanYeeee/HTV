@@ -17,10 +17,13 @@ client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 db = client["selfPharma"]
 order = db["orders"]
 
+def delete():
+    order.delete_many({})
 
 def upload_order(username, drugname, amount, description, schedule: list[str], dose, color):
-    order.insert_one({"username": username, "drugname": drugname, "amount": amount, "description": description,
+    result = order.insert_one({"username": username, "drugname": drugname, "amount": amount, "description": description,
                       "schedule": schedule, "dose":dose, "color":color})
+    return str(result.inserted_id)
 
 def get_order(id):
     try:

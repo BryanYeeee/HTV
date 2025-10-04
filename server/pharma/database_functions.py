@@ -18,6 +18,8 @@ client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 db = client["selfPharma"]
 pharmacy = db["pharmacy"]
 
+def delete():
+    pharmacy.delete_many({})
 
 def upload_pharma(username, password):
     pharmacy.insert_one({"username": username, "password": password, "stock": []})
@@ -44,7 +46,7 @@ def increase_stock(username, drugname):
         pharmacy.update_one({"username": username}, {"$push": {"stock": {"drugname": drugname, "amount": 100}}})
 
 
-def approve_order(id: str):
+def approve_order(id: str, pharmacy_username):
     result = get_order(id)
     if not result:
         return False
@@ -64,5 +66,5 @@ def approve_order(id: str):
     threshold = int(doses_per_day * 3)
 
     upload_drug(username, drugname, amount, description, schedule, dose, threshold)
-    decrease_stock(username, drugname, amount)
+    decrease_stock(pharmacy_username, drugname, amount)
     return True
