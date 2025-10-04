@@ -34,14 +34,14 @@ const ClientPort = () => {
   ])
 
   useEffect(() => {
-    // request
-    //   .get('/drugs')
-    //   .then(data => setDrugData(data))
-    //   .catch(err => console.error('Failed to fetch drugs:', err))
+    request
+      .get('/')
+      .then(data => {console.log('LFGGGG')})
+      .catch(err => console.error('Failed to fetch drugs:', err))
   }, [])
 
   return (
-    <div className='bg flex justify-around items-center h-screen p-10 gap-12'>
+    <div className='flex justify-around items-center h-screen p-10 gap-12'>
       <div className='w-2/3 h-full flex flex-col'>
         <div className='flex gap-4 py-2 justify-between'>
           <div className='flex gap-4'>
@@ -77,6 +77,7 @@ const ClientPort = () => {
             <Table
               data={drugData}
               keys={['name', 'remain']}
+              curDrug={curDrug}
               onRowClick={setCurDrug}
               className='h-full'
             />,
