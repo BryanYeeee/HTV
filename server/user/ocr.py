@@ -11,4 +11,4 @@ final_text = ""
 for (bbox, text, prob) in results:
     final_text += f"{text} \n"
 
-
+print(final_text)
