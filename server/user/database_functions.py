@@ -1,3 +1,11 @@
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = "mongodb+srv://rianmehta20_db_user:<db_password>@selfpharma.lasodmi.mongodb.net/?retryWrites=true&w=majority&appName=SelfPharma"
+# Create a new client and connect to the server
+client = MongoClient(uri)
+db = client["selfPharma"]
+user =
 
 
 def upload_user(username, password):
