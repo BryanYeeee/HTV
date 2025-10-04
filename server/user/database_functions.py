@@ -1,16 +1,24 @@
+import certifi
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+from pymongo.server_api import ServerApi
+
+load_dotenv()
 
 # Replace with your Atlas connection string
-uri = "mongodb+srv://rianmehta20_db_user:XjvPPSFZ0eGEGz3D@selfpharma.lasodmi.mongodb.net/?retryWrites=true&w=majority&appName=SelfPharma"
+uri = os.getenv("MONGO_URI")
+
 # Create a connection
-client = MongoClient(uri)
+client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 
 # Create or switch to a database
 db = client["selfPharma"]
-user = db["user"]
+user = db["users"]
+
 
 def upload_user(username, password):
-    user.insert_one({"username": username, "password": password, "medicines":[]})
+    user.insert_one({"username": username, "password": password, "medicines": []})
 
 
 def check_user(username):
@@ -19,8 +27,11 @@ def check_user(username):
         return result["password"]
     return None
 
-def upload_medicine(username, medicine_name, amount, schedule:list[str], dose, threshold):
-    user.update_one({"username": username}, {'$push': {"medicines": [{"name":medicine_name, "amount": amount, "schedule":schedule, "dose":dose, "threshold":threshold}]}})
+
+def upload_drug(username, drugname, amount, description, schedule: list[str], dose, threshold):
+    user.update_one({"username": username}, {'$push': {"medicines": [
+        {"drugname": drugname, "amount": amount, "description": description, "schedule": schedule, "dose": dose,
+         "threshold": threshold}]}})
 
 
 def get_medicines(username):
