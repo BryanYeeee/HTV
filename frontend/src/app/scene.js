@@ -18,10 +18,10 @@ export const PillRender = forwardRef((props, ref) => {
     const stateRef = useRef("default");
 
     useImperativeHandle(ref, () => ({
-        triggerSeparation: () => {
+        triggerSeparation: (state) => {
             console.log("AAAA");
             if (!pillRef.current) return
-            stateRef.current = "seperate"
+            stateRef.current = state
 
         }
     }));
@@ -270,14 +270,13 @@ export const PillRender = forwardRef((props, ref) => {
                 case "open":
                     updateNormals(pillRef.current, pillRef.current, false);
                     animateMouth();
-                    stateRef.current = curOpens <= 0 ? "hori" : stateRef.current;
+                    // stateRef.current = curOpens <= 0 ? "hori" : stateRef.current;
                     break;
                 case "seperate2":
                     animateSeparate(0.1);
                     break;
 
             }
-            console.log(stateRef.current)
 
 
 

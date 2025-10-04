@@ -34,12 +34,14 @@ const Hero = ({ pages }) => {
         tl.current = gsap.timeline({ paused: false })
             .to('#graphic', { height: 'auto', ease: 'power4.inOut', duration: 1.2 })
             .from('.titlebord', { duration: 1.5, xPercent: 100, opacity: 0 }, 'o')
+            .from('#menu', { duration: 1, y: -50, opacity: 0 }, 'o')
             .from(split.chars, { opacity: 0, y: 50, stagger: 0.01, duration: 1.2, ease: 'power4.out' }, 'o')
             .from('#theRest', { opacity: 0, yPercent: -100, ease: 'expo.out', duration: 1.2 }, 'o')
             .to('#theRest', { opacity: 1, yPercent: 0, ease: 'expo.out', duration: 1.2 }, 'o')
             .from('#goose', { opacity: 0, ease: 'bounce.inOut', duration: 0.8 }, 'p')
             .to('#goose', { opacity: 1, ease: 'bounce.inOut', duration: 0.8 }, 'p')
-            .to('#heroText', { top: '0%', yPercent: 100, scale: 2, ease: 'power4.out', duration: 1.4 }, 'p')
+            .to('#menu', { top: '0%', yPercent: 100, scale: 2, ease: 'power4.out', duration: 1.4 }, 'p')
+            .to('#heroText', { top: '0%', yPercent: 100, scale: 1.5, ease: 'power4.out', duration: 1.4 }, 'p')
             .to("#heartbeat-path", {
                 opacity: 1,
                 duration: 0.5
@@ -56,7 +58,6 @@ const Hero = ({ pages }) => {
 
 
     }, { scope: heroRef })
-
 
 
     const MomoGoose = useMemo(() => (
@@ -94,11 +95,27 @@ const Hero = ({ pages }) => {
                             </div>
                         </div>
 
-                        <div className="border rounded-xl z-10 w-1/3 h-1/3">
+                        <div id="menu" className="border rounded-xl z-10 w-auto h-auto">
                             <div className="flex flex-col items-center">
-                                <button onClick={() => pillRef.current?.triggerSeparation()}>
+                                <button 
+                                    className="border rounded-xl font-bold text-[2vw] p-3 bg-foreground text-[#ead3d3]">
                                     GET STARTED
                                 </button>
+                                {/* <button onClick={() => pillRef.current?.triggerSeparation("seperate")}>
+                                    sep
+                                </button>
+                                <button onClick={() => pillRef.current?.triggerSeparation("default")}>
+                                    def
+                                </button>
+                                <button onClick={() => pillRef.current?.triggerSeparation("verti")}>
+                                    verti
+                                </button>
+                                <button onClick={() => pillRef.current?.triggerSeparation("open")}>
+                                    open
+                                </button>
+                                <button onClick={() => pillRef.current?.triggerSeparation("hori")}>
+                                    hori
+                                </button> */}
                             </div>
                         </div>
 
