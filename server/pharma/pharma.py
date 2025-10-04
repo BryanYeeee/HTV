@@ -1,15 +1,15 @@
 from .hasher import h_login, h_signup
 from flask import Blueprint, jsonify
 
-user = Blueprint("user", __name__)
+pharma = Blueprint("pharma", __name__)
 
 
-@user.route("/")
+@pharma.route("/")
 def user_index():
     return "hello user"
 
 
-@user.route("/login")
+@pharma.route("/login")
 def login():
     # TODO: update the variables with request parameters
     username = ""
@@ -23,7 +23,7 @@ def login():
     return response
 
 
-@user.route("/signup")
+@pharma.route("/signup")
 def signup():
     # TODO: update the variables with request parameters
     username, password = "", ""
