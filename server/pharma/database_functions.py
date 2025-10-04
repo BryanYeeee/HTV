@@ -1,5 +1,5 @@
 from server.order.database_functions import get_order
-from server.user.database_functions import upload_medicine
+from server.user.database_functions import upload_drug
 import certifi
 from pymongo import MongoClient
 import os
@@ -49,4 +49,4 @@ def approve_order(id) -> bool:
     schedule = result["schedule"]
     dose = result["dose"]
     threshold = int(len(schedule)/7) * 3
-    return upload_medicine(username, drugname, amount, description, schedule, dose, threshold)
+    return upload_drug(username, drugname, amount, description, schedule, dose, threshold)
