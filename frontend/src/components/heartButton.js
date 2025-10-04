@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 export default function HeartMonitorButton ({
   text = 'Heartbeat',
   color = '#2ef2b7',
-  duration = 1000,
+  duration = 500,
   disabled = '',
   className = ''
 }) {
@@ -31,10 +31,10 @@ export default function HeartMonitorButton ({
     <button
       type='button'
       disabled={disabled}
-      className={`disabled:opacity-50 hover:scale-90 duration-75 relative overflow-hidden inline-flex items-center gap-3 px-2 py-1 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
+      className={`disabled:opacity-50 not-disabled:hover:scale-105 not-disabled:active:scale-90 duration-75 relative overflow-hidden inline-flex items-center gap-3 px-2 py-1 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
       aria-label={text}
     >
-      <span className='z-2'>{text}</span>
+      <span className='z-2 text-center w-full'>{text}</span>
 
       <svg
         viewBox={`0 0 ${viewW} ${viewH}`}
@@ -82,7 +82,7 @@ export default function HeartMonitorButton ({
             stroke-dashoffset: 0;
           }
         }
-        button:hover svg .ecg-path {
+        button:hover:not(*:disabled) svg .ecg-path {
           animation: ecg-draw var(--dur) linear forwards;
         }
         @media (prefers-reduced-motion: reduce) {

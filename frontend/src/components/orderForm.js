@@ -1,0 +1,91 @@
+'use client'
+import { useState } from 'react'
+
+const OrderForm = () => {
+  const [file, setFile] = useState(null)
+  const [preview, setPreview] = useState(null)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleFile = f => {
+    if (!f) return
+    setFile(f)
+    if (f.type.startsWith('image/')) {
+      const reader = new FileReader()
+      reader.onloadend = () => setPreview(reader.result)
+      reader.readAsDataURL(f)
+    } else {
+      setPreview(null)
+    }
+  }
+
+  const handleDrop = e => {
+    e.preventDefault()
+    setIsDragging(false)
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0])
+    }
+  }
+
+  return (
+    <div className='h-full border p-6 space-y-6'>
+      <div className='text-sm text-muted-foreground'>
+        Please upload an image of the pill packaging or a PDF prescription.
+      </div>
+
+      <form className='flex flex-col space-y-4'>
+        {/* Drag & Drop Zone */}
+        <div
+          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition 
+            ${isDragging ? 'border-accent1 bg-accent1/10' : 'border-border'}`}
+          onDragOver={e => {
+            e.preventDefault()
+            setIsDragging(true)
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
+          onClick={() => document.getElementById('fileInput').click()}
+        >
+          {preview ? (
+            <div className='flex flex-col items-center space-y-3'>
+              {file?.type.startsWith('image/') ? (
+                <img
+                  src={preview}
+                  alt='Preview'
+                  className='max-h-40 rounded-lg shadow-md'
+                />
+              ) : (
+                <div className='flex flex-col items-center space-y-1'>
+                  <div className='text-4xl'>📄</div>
+                  <span className='text-sm text-foreground'>PDF File</span>
+                </div>
+              )}
+              <span className='text-sm text-foreground'>{file?.name}</span>
+            </div>
+          ) : (
+            <div className='text-muted-foreground'>
+              Drag & Drop an image or PDF here, or click to browse
+            </div>
+          )}
+
+          <input
+            id='fileInput'
+            type='file'
+            accept='image/*,application/pdf'
+            className='hidden'
+            onChange={e => handleFile(e.target.files[0])}
+          />
+        </div>
+
+        {/* Submit button */}
+        <button
+          type='submit'
+          className='px-4 py-2 bg-accent1 text-white rounded-lg hover:bg-accent1/80 transition'
+        >
+          Submit Order
+        </button>
+      </form>
+    </div>
+  )
+}
+
+export default OrderForm

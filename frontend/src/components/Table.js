@@ -10,9 +10,6 @@ import HeartMonitorButton from '@/components/heartButton'
 export default function Table ({
   data = [],
   columns = null,
-  evenCol = 'fore1',
-  oddCol = 'fore2',
-  hoverCol = 'accent1',
   className = '',
   numRows = 10,
   onRowClick
@@ -46,7 +43,6 @@ export default function Table ({
 
   const sorted = useMemo(() => {
     if (!sortKey) return filtered
-    const col = inferredColumns.find(c => c.key === sortKey) || {}
     const dir = sortDir === 'asc' ? 1 : -1
     const copy = [...filtered]
     copy.sort((a, b) => {
@@ -93,7 +89,7 @@ export default function Table ({
   // Render
   return (
     <div className={`${className} text-sm`}>
-      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3'>
+      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2'>
         <div className='flex items-center gap-2'>
           <label className='sr-only' htmlFor='table-search'>
             Search
@@ -198,7 +194,7 @@ export default function Table ({
         </table>
       </div>
 
-      <div className='mt-3 flex items-center justify-between gap-2'>
+      <div className='mt-2 flex items-center justify-between gap-2'>
         <div className=''>
           Page {page} of {pageCount}
         </div>
@@ -208,7 +204,6 @@ export default function Table ({
               text='First'
               disabled={page === 1}
               color='#ff6b6b'
-              duration={500}
             />
           </div>
           <div onClick={() => goTo(page - 1)}>
@@ -216,7 +211,6 @@ export default function Table ({
               text='Prev'
               disabled={page === 1}
               color='#ff6b6b'
-              duration={500}
             />
           </div>
           <div onClick={() => goTo(page + 1)}>
@@ -224,7 +218,6 @@ export default function Table ({
               text='Next'
               disabled={page === pageCount}
               color='#ff6b6b'
-              duration={500}
             />
           </div>
           <div onClick={() => goTo(pageCount)}>
@@ -232,7 +225,6 @@ export default function Table ({
               text='Last'
               disabled={page === pageCount}
               color='#ff6b6b'
-              duration={500}
             />
           </div>
         </div>

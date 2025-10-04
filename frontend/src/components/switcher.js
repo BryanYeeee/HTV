@@ -26,7 +26,7 @@ export default function Switcher ({ children, activeIndex, axis = 'y', className
   }
 
   return (
-    <div className={`relative h-full ${className}`}>
+    <div className={`relative ${className}`}>
       <AnimatePresence
         mode='popLayout'
         custom={activeIndex - prevIndex.current}
