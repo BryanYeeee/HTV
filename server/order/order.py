@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from .database_functions import upload_order, get_orders, get_order
+import requests
 
 order = Blueprint("order", __name__)
 
@@ -25,4 +26,13 @@ def list_orders():
     response = jsonify(get_orders())
     return response
 
+
+@order.route("/get_order")
+def one_order():
+    data = request.get_json()
+    orderd_id = data["order_id"]
+    order = get_order(orderd_id)
+    response = requests.post("http://localhost:8080/user/confirm_order",
+                             {"username": order["username"]})
+    return "good boy"
 

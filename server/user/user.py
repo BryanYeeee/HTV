@@ -1,4 +1,4 @@
-from .database_functions import upload_drug
+from .database_functions import upload_drug, confirm_order
 from .hasher import h_login, h_signup
 from flask import Blueprint, jsonify, request
 from .ocr import parse_text
@@ -56,3 +56,9 @@ def send_prescription():
     # return {"filename": filename, "mimetype": mimetype}, 200
 
 
+@user.route("/confirm_order", methods=["POST"])
+def change_user_tag():
+    data = request.get_json()
+    username = data["username"]
+    confirm_order(username)
+    return "GREAT"
