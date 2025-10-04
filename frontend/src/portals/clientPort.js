@@ -2,23 +2,13 @@
 import { useState } from 'react'
 import TimeTable from '@/components/TimeTable'
 import Graph from '@/components/graph'
+import { DiAptana } from 'react-icons/di'
 
 const tempData = [
-  {
-    pillName: 'Aspirin',
-    remain: 120,
-    dates: []
-  },
-  {
-    pillName: 'B',
-    remain: 120,
-    dates: []
-  },
-  {
-    pillName: 'C',
-    remain: 120,
-    dates: []
-  }
+  { name: 'D', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
+  { name: 'A', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
+  { name: 'B', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] },
+  { name: 'C', remain: 120, dates: [], model: ['rgb(255, 182, 193)'] }
 ]
 import HeartMonitorButton from '@/components/heartButton'
 import Switcher from '@/components/switcher'
@@ -65,11 +55,12 @@ const ClientPort = () => {
             />
           </div>
         </div>
-        <Switcher activeIndex={leftIndex} axis='y' className='w-full h-full'>
+        <Switcher activeIndex={leftIndex} axis='y' className='size-full'>
           {[
             <TimeTable numRows={18} onDrugClick={setCurDrug} />,
             <Table
               data={tempData}
+              keys={['name', 'remain']}
               onRowClick={setCurDrug}
               className='h-full'
             />,
@@ -77,35 +68,35 @@ const ClientPort = () => {
           ]}
         </Switcher>
       </div>
-      <div className='h-full w-1/3 border'>
-        <div className='flex gap-4 py-2 justify-between'>
-          <div onClick={() => setLeftIndex(1)}>
+      <div className='w-1/3 h-full flex flex-col'>
+        <div className='flex flex-row-reverse gap-4 py-2 justify-between'>
+          {/* <div onClick={() => setRightIndex(1)}>
             <HeartMonitorButton
-              text='View Drugs'
-              disabled={leftIndex == 1}
+              text='View Drug'
+              disabled={rightIndex == 1}
               color='#ff6b6b'
               className='w-40'
             />
-          </div>
-          <div onClick={() => setLeftIndex(0)}>
+          </div> */}
+          <div onClick={() => setRightIndex((rightIndex + 1) % 2)}>
             <HeartMonitorButton
-              text='View Schedule'
-              disabled={leftIndex == 0}
+              text={<DiAptana size={'2rem'} />}
+              // disabled={rightIndex == 0}
               color='#ff6b6b'
-              className='w-40'
+              className=''
             />
           </div>
         </div>
-        <Switcher activeIndex={rightIndex} axis='y' className='w-full h-full'>
+        <Switcher activeIndex={rightIndex} axis='y' className='size-full'>
           {[
-            <section className='h-full border p-8 flex flex-col items-center space-y-4'>
+            <section className='h-full border p-8 flex flex-col items-center '>
               <div className='border h-20 w-15'>PILL MODEL</div>
               <div>{curDrug.name}</div>
               <div>{curDrug.description}</div>
             </section>,
 
             <section className='h-full border p-8 flex flex-col items-center space-y-4'>
-              <div className='border h-20 w-15'>PILL MODEL</div>
+              <div className='border h-20 w-15'>PILL MOasdsaDEL</div>
               <div>{curDrug.name}</div>
               <div>{curDrug.description}</div>
             </section>

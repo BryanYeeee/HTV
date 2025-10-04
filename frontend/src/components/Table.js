@@ -9,20 +9,23 @@ import HeartMonitorButton from '@/components/heartButton'
 
 export default function Table ({
   data = [],
-  columns = null,
+  keys = null,
   className = '',
   numRows = 10,
   onRowClick
 }) {
   const inferredColumns = useMemo(() => {
-    if (columns && columns.length) return columns
     const first = data && data.length ? data[0] : {}
-    return Object.keys(first).map(k => ({
+
+    // if keys provided, only include those
+    const targetKeys = keys?.length ? keys : Object.keys(first)
+
+    return targetKeys.map(k => ({
       key: k,
       label: prettify(k),
       sortable: true
     }))
-  }, [columns, data])
+  }, [data, keys])
 
   const [search, setSearch] = useState('')
   const [sortKey, setSortKey] = useState(null)
@@ -83,6 +86,7 @@ export default function Table ({
   }
 
   function handleRowClick (row) {
+    console.log(row)
     if (onRowClick) onRowClick(row)
   }
 

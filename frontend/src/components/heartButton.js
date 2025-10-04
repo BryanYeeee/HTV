@@ -32,9 +32,9 @@ export default function HeartMonitorButton ({
       type='button'
       disabled={disabled}
       className={`disabled:opacity-50 not-disabled:hover:scale-105 not-disabled:active:scale-90 duration-75 relative overflow-hidden inline-flex items-center gap-3 px-2 py-1 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
-      aria-label={text}
+      // aria-label={text}
     >
-      <span className='z-2 text-center w-full'>{text}</span>
+      <div className='z-2 flex justify-center w-full'>{text}</div>
 
       <svg
         viewBox={`0 0 ${viewW} ${viewH}`}
