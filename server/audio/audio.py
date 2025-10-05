@@ -1,5 +1,6 @@
 from flask import Blueprint, request
-
+from text_speech import text_to_speech
+from text_speech.text_to_speech import query_gemini
 
 audio = Blueprint("audio", __name__)
 
@@ -15,6 +16,7 @@ def upload_audio():
         return "No audio file part", 400
 
     file = request.files['audio']
-    # Save it to disk
-    file.save("./audio/uploaded_audio.wav")  # or file.filename if you prefer
-    return "Audio received and saved!"
+    recorded_text = text_to_speech.transcribe(file)
+    speak_text = text_to_speech.query_gemini('bob', recorded_text)
+    text_to_speech.speak(speak_text)
+    return "pill"
