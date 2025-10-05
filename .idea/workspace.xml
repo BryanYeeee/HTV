@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c1064b5-2e38-4b60-b8ad-fe3dd6544dd1" name="Changes" comment="completed order">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/order/database_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/order/database_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pharma/database_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/pharma/database_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,11 +86,11 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/order" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/pharma" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/order/database_functions.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/pharma/database_functions.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -122,6 +123,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.database_functions" />
         <item itemvalue="Python.database_functions" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.text_to_speech" />

@@ -47,7 +47,6 @@ def get_orders():
     orders_list = []
 
     for doc in result:
-        # Convert ObjectId to string
         doc["_id"] = str(doc["_id"])
         orders_list.append(doc)
 
