@@ -22,10 +22,12 @@ pharmacy = db["pharmacy"]
 def delete():
     pharmacy.delete_many({})
 
-
 def upload_pharma(username, password):
     pharmacy.insert_one({"username": username, "password": password, "stock": []})
 
+def get_stocks(username):
+    result = pharmacy.find_one({"username": username})
+    return result["stock"]
 
 def check_pharma(username):
     result = pharmacy.find_one({"username": username})

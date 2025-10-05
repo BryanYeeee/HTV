@@ -1,4 +1,5 @@
 from .hasher import h_login, h_signup
+from .database_functions import get_stocks
 from flask import Blueprint, jsonify, request
 import requests
 
@@ -14,8 +15,11 @@ def user_index():
 def login():
     data = request.get_json()
     username, password = data["username"], data["password"]
-    h_login(username, password)
-    response = jsonify({"response": "good login"})
+    verify = h_login(username, password)
+    if verify:
+        response = jsonify({"type": "pharma"})
+        return response
+    response = jsonify(({"response": "bad login"}))
     return response
 
 
@@ -36,3 +40,10 @@ def approve_order():
 
     return
 
+
+@pharma.route("/get_stocks", methods=["POST"])
+def pharma_stocks():
+    data = request.get_json()
+    username = data["username"]
+    response = jsonify(get_stocks(username))
+    return response
