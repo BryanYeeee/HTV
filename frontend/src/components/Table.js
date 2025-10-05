@@ -12,6 +12,7 @@ export default function Table ({
   keys = null,
   className = '',
   numRows = 10,
+  curDrug,
   onRowClick
 }) {
   const inferredColumns = useMemo(() => {
@@ -115,21 +116,21 @@ export default function Table ({
       </div>
 
       <div
-        className='overflow-auto rounded-md py-4 bg-fore3'
-        data-augmented-ui='tl-clip tr-clip br-clip bl-clip both'
-        style={{
-          '--aug-border-all': '2px',
-          '--aug-border-bg': 'var(--bordercol)'
-        }}
+        className='overflow-auto rounded-md'
+        // data-augmented-ui='tl-clip tr-clip br-clip bl-clip both'
+        // style={{
+        //   '--aug-border-all': '2px',
+        //   '--aug-border-bg': 'var(--bordercol)'
+        // }}
       >
-        <table className='min-w-full table-fixed bg-fore3' role='table'>
+        <table className='min-w-full table-fixed' role='table'>
           <thead>
-            <tr>
+            <tr className='border-b-3 border-fore4'>
               {inferredColumns.map(col => (
                 <th
                   key={col.key}
                   scope='col'
-                  className='px-3 py-2 text-left font-medium select-none cursor-pointer'
+                  className='px-3 py-2 text-left font-medium select-none cursor-pointer bg-fore3'
                   onClick={() => col.sortable !== false && toggleSort(col.key)}
                 >
                   <div className='flex items-center gap-2'>
@@ -161,7 +162,12 @@ export default function Table ({
                 {current.map((row, i) => (
                   <tr
                     key={i}
-                    className={`odd:bg-fore1 even:bg-fore2 hover:bg-accent1 cursor-pointer`}
+                    className={`box-border odd:bg-fore1 even:bg-fore2 hover:bg-accent1 cursor-pointer`}
+                    style={
+                      row.name == curDrug?.name
+                        ? { backgroundColor: 'var(--accent1)', outline: '3px solid var(--accent2)' }
+                        : {}
+                    }
                     onClick={() => handleRowClick(row)}
                   >
                     {inferredColumns.map(col => (

@@ -10,25 +10,26 @@ import DrugCell from './drugCell'
 
 const HEAD = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 const TIME = [
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17',
-  '18',
-  '19',
-  '20',
-  '21',
-  '22',
-  '23',
-  '24'
+  '07:00',
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00',
+  '24:00'
 ]
+
 
 export default function TimeTable ({
   data = [
@@ -106,12 +107,12 @@ export default function TimeTable ({
       <div className='overflow-auto rounded-md' data-augmented-ui='both'>
         <table className='min-w-full table-fixed ' role='table'>
           <thead>
-            <tr>
+            <tr className='border-b-3 border-fore4'>
               {['TIME', ...HEAD].map((col, i) => (
                 <th
                   key={col + '-h-' + i}
                   scope='col'
-                  className='px-3 py-1 text-left font-medium bg-fore3'
+                  className='px-5 py-1 text-left font-medium bg-fore3'
                 >
                   <div className='flex justify-center items-center'>{col}</div>
                 </th>
@@ -122,7 +123,7 @@ export default function TimeTable ({
             {TIME.map((time, i) => (
               <tr
                 key={time + '-r-' + i}
-                className={`cursor-pointer first:border-t relative`}
+                className={`cursor-pointer relative`}
               >
                 <td className='px-3 py-[3px] align-center w-1 text-center'>
                   <div className='font-bold bg-[#00000020] rounded-full'>
