@@ -23,7 +23,7 @@ def new_order():
 @order.route("/list_orders")
 def list_orders():
     # params from request - NONE
-    response = jsonify(get_orders())
+    response = get_orders()
     return response
 
 
