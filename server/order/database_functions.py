@@ -36,7 +36,7 @@ def completed_order(id):
         print("Invalid ID format:", e)
         return None
 
-    order.update_one({"_id":obj_id}, {"ready":True})
+    order.update_one({"_id":obj_id}, {"$set":{"ready": True}})
 
 
 def get_order(id):
@@ -52,11 +52,11 @@ def get_order(id):
 
 
 def get_orders():
-    result = order.find({})
+    result = order.find({"ready": False})
     orders_list = []
 
     for doc in result:
-        doc["_id"] = str(doc["_id"])
+        doc["_id"] = str(doc["_id"])  # Convert ObjectId to string for JSON compatibility
         orders_list.append(doc)
 
     return orders_list
