@@ -1,4 +1,4 @@
-from .database_functions import get_drugs
+from .database_functions import get_drugs, take_pill
 from .hasher import h_login, h_signup
 from flask import Blueprint, jsonify, request
 from .ocr import parse_text
@@ -60,7 +60,7 @@ def send_prescription():
     print("Content-Type:", request.content_type)
     print("Form keys:", request.form.keys())
     print("Files keys:", request.files.keys())
-    # recieves image in mime type     
+    # recieves image in mime type
     file = request.files.get("file")
     username = request.form.get("username")
     print(username, file)
@@ -70,7 +70,7 @@ def send_prescription():
     # Check mimetype (e.g., "image/jpeg", "image/png")
     mimetype = file.mimetype
     filename = file.filename
-    
+
     # Save the file if you want
     file.save("./prescription.png")
     response = parse_text()
@@ -100,3 +100,11 @@ def get_user_drugs():
     username = data["username"]
     response = jsonify(get_drugs(username))
     return response
+
+@user.route("/subtract", methods=["POST"])
+def take_pill_pharma():
+    data = request.get_json()
+    username = data["username"]
+    drugname = data["drugname"]
+    take_pill(username, drugname)
+    return "done"
