@@ -3,6 +3,7 @@ import pyaudio
 import pyttsx3
 import json
 from dotenv import load_dotenv
+import os
 from google import genai
 import datetime
 from text_speech.database_functions import get_user_info
