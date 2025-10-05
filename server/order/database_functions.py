@@ -43,9 +43,12 @@ def get_order(id):
 
 
 def get_orders():
-    # list of all orders
-    result = order.find({}, {"_id": 0})
-    return list(result)
+    result = order.find({})
+    orders_list = []
 
-def completed_order(id):
-    order.update_one({"_id": ObjectId(id)}, {"$set": {"ready": True}})
+    for doc in result:
+        # Convert ObjectId to string
+        doc["_id"] = str(doc["_id"])
+        orders_list.append(doc)
+
+    return orders_list
