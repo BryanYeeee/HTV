@@ -48,6 +48,7 @@ def increase_stock(username, drugname):
         pharmacy.update_one({"username": username, "stock.drugname": drugname}, {"$inc": {"stock.$.amount": 100}})
     else:
         pharmacy.update_one({"username": username}, {"$push": {"stock": {"drugname": drugname, "amount": 100}}})
+    return "increased"
 
 
 # def approve_order(id: str):
