@@ -129,7 +129,7 @@ const Hero = ({ pages }) => {
         request
             .post(`/${type}/login`, { username, password })
             .then(data =>
-                handleSuccessfulLogin(data)
+                handleSuccessfulLogin(data, username)
             )
             .catch(err => {
                 console.error('Login failed:', err);
@@ -146,7 +146,7 @@ const Hero = ({ pages }) => {
 
     };
 
-    const handleSuccessfulLogin = (data) => {
+    const handleSuccessfulLogin = (data, username) => {
         console.log("Login success:", data);
 
         if (data.authkey) {

@@ -13,6 +13,7 @@ import { PillRender } from '@/components/scene'
 
 import { scheduleFromData } from '@/utils/scheduler'
 import { notify } from '@/utils/notify'
+import Cookies from 'js-cookie'
 
 const ClientPort = () => {
   const [popup, setPopup] = useState(null)

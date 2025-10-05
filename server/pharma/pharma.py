@@ -5,12 +5,14 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 from pymongo.server_api import ServerApi
-
+from flask import Blueprint, jsonify, request
 load_dotenv()
+import requests
+from .hasher import h_login, h_signup
 
 # Replace with your Atlas connection string
 uri = os.getenv("MONGO_URI")
-
+pharma = Blueprint("pharma", __name__)
 # Create a connection
 client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 
@@ -18,6 +20,38 @@ client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
 db = client["selfPharma"]
 pharmacy = db["pharmacy"]
 
+@pharma.route("/login", methods=['POST'])
+def login():
+    data = request.get_json()
+    username, password = data["username"], data["password"]
+    verify = h_login(username, password)
+    if verify:
+        response = jsonify({"type": "pharma"})
+        return response
+    response = jsonify(({"response": "bad login"}))
+    return response
+
+
+@pharma.route("/signup", methods=["POST"])
+def signup():
+    data = request.get_json()
+    username, password = data["username"], data["password"]
+    h_signup(username, password)
+    return jsonify({"response": "good signup"})
+
+@pharma.route("/increase_stock", methods=["POST"])
+def increase_stock_pharma():
+    data = request.get_json()
+    pharma_id, drugname = data["username"], data["drugname"]
+    increase_stock(pharma_id, drugname)
+    return "increase"
+
+@pharma.route("/get_stocks", methods=["POST"])
+def pharma_stocks():
+    data = request.get_json()
+    username = data["username"]
+    response = jsonify(get_stocks(username))
+    return response
 
 def delete():
     pharmacy.delete_many({})

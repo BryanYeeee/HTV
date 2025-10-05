@@ -8,7 +8,7 @@ load_dotenv('../.env')
 reader = easyocr.Reader(['en'])
 
 # Run OCR on an image
-results = reader.readtext('./user/prescription.png')
+results = reader.readtext('./prescription.png')
 
 # Print out detected text
 ocr_text = ""

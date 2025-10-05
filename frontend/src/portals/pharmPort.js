@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import Graph from '@/components/graph'
-// import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 
 import HeartMonitorButton from '@/components/heartButton'
 import Switcher from '@/components/switcher'
@@ -17,7 +17,7 @@ const PharmPort = () => {
 
   const getDrugData = () => {
     request
-      .post('/pharma/get_stocks', { username: 'wellcare_pharma' })
+      .post('/pharma/get_stocks', { username: Cookies.get('username') })
       .then(async data => {
         console.log('LFGGGG', data)
         setDrugData(data)
@@ -48,7 +48,7 @@ const PharmPort = () => {
   const addStock = () => {
     request
       .post('/pharma/increase_stock', {
-        username: 'wellcare_pharma',
+        username: Cookies.get('username'),
         drugname: curDrug
       })
       .then(async data => {
