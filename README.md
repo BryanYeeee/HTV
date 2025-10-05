@@ -2,8 +2,10 @@
 
 ## Connecting patients and pharmacies in an innovative way!
 
-# ![Devpost](https://devpost.com/software/selfpharma) 
-# ![Youtube](https://youtu.be/uWD7JsP5vbE) 
+
+# [Devpost](https://devpost.com/software/selfpharma)
+# [YouTube](https://youtu.be/uWD7JsP5vbE)
+
 
 ## How to setup:
 
