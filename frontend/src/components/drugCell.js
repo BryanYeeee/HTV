@@ -10,7 +10,7 @@ const DrugCell = ({ data, onDrugClick }) => {
       initial={{ scale: 0 }}  
       animate={{ scale: 1 }}          
       transition={{ duration: 0.3 }}
-      className={`relative px-8 py-4 hover:scale-105 active:scale-90 duration-75 flex justify-center items-center rounded-full h-6 shadow-2xl border-b-3`}
+      className={`relative px-14 py-4 hover:scale-105 active:scale-90 duration-75 flex justify-center items-center rounded-full h-6 shadow-2xl border-b-3`}
       style={{ backgroundColor: data.properties[1], borderBottomColor: borderCol }}
       onClick={() => onDrugClick(data)}
     >

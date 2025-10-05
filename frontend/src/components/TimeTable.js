@@ -90,7 +90,7 @@ export default function TimeTable ({
 
   data.forEach(drug => {
     drug.schedule.forEach(tslot => {
-      timeData[parseInt(tslot.substring(2)) / 100 - 7][
+      timeData[parseInt(tslot.substring(2,4)) - 7][
         parseInt(tslot.charAt(0))
       ] = drug
     })

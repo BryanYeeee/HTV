@@ -1,11 +1,12 @@
 import vosk
-import pyaudio
 import pyttsx3
 import json
 from dotenv import load_dotenv
-import os
 from google import genai
 import datetime
+import os
+from pydub import AudioSegment
+
 from text_speech.database_functions import get_user_info
 from gtts import gTTS
 import io
@@ -17,7 +18,8 @@ load_dotenv("../server/.env")
 client = genai.Client()
 
 # Initialize Vosk
-model = vosk.Model("vosk-model-small-en-us-0.15")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "vosk-model-small-en-us-0.15")
+model = vosk.Model(MODEL_PATH)
 recognizer = vosk.KaldiRecognizer(model, 16000)
 
 # Initialize pyttsx3
@@ -27,28 +29,23 @@ now = datetime.datetime.now()
 day = now.weekday()
 time = now.time()
 
-def record_and_transcribe(duration=5):
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=1,
-                    rate=16000,
-                    input=True,
-                    frames_per_buffer=8000)
-    print("Recording...")
-    frames = []
-    for _ in range(0, int(16000 / 8000 * duration)):
-        data = stream.read(8000)
-        frames.append(data)
-        if recognizer.AcceptWaveform(data):
-            pass
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-    print("Recording finished.")
+def transcribe(file_like):
+    """
+    Transcribe an uploaded audio file-like object using Vosk.
+    Supports WAV, MP3, WebM, etc.
+    """
+    # Convert to PCM WAV mono 16kHz
+    audio = AudioSegment.from_file(file_like)  # auto-detect format
+    audio = audio.set_frame_rate(16000).set_channels(1).set_sample_width(2)
 
-    text = recognizer.FinalResult()
-    text = json.loads(text).get("text", "")
-    print(f"Recognized: {text}")
+    chunk_size = 4000
+    for i in range(0, len(audio.raw_data), chunk_size):
+        chunk = audio.raw_data[i:i+chunk_size]
+        recognizer.AcceptWaveform(chunk)
+
+    result = recognizer.FinalResult()
+    text = json.loads(result).get("text", "")
+    print(f"🗣️ Recognized text: {text}")
     return text
 
 def query_gemini(username, text):
@@ -97,13 +94,13 @@ def speak(text):
     while pygame.mixer.music.get_busy():
         continue
 
-def main():
-    while True:
-        text = record_and_transcribe()
-        if text.lower() in ["exit", "quit", "stop"]:
-            break
-        response = query_gemini("bob", text)
-        speak(response)
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     while True:
+#         text = record_and_transcribe()
+#         if text.lower() in ["exit", "quit", "stop"]:
+#             break
+#         response = query_gemini("bob", text)
+#         speak(response)
+#
+# if __name__ == "__main__":
+#     main()
