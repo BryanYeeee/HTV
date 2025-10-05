@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from text_speech import text_to_speech
+import requests
 
 audio = Blueprint("audio", __name__)
 
@@ -17,5 +18,6 @@ def upload_audio():
     file = request.files['audio']
     recorded_text = text_to_speech.transcribe(file)
     speak_text = text_to_speech.query_gemini('bob', recorded_text)
+    response = requests.post("http://localhost:3000", {"status": "done"})
     text_to_speech.speak(speak_text)
     return "pill"
