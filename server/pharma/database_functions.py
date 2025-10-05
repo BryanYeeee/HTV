@@ -1,5 +1,5 @@
-from server.order.database_functions import completed_order, get_order
-from server.user.database_functions import upload_drug
+# from server.order.database_functions import completed_order, get_order
+# from server.user.database_functions import upload_drug
 import certifi
 from pymongo import MongoClient
 import os

@@ -17,7 +17,7 @@ const PharmPort = () => {
 
   const getDrugData = () => {
     request
-      .post('/pharma/get_stocks', { username: 'wellcare_pharma'})
+      .post('/pharma/get_stocks', { username: 'wellcare_pharma' })
       .then(async data => {
         console.log('LFGGGG', data)
         setDrugData(data)
@@ -47,7 +47,10 @@ const PharmPort = () => {
 
   const addStock = () => {
     request
-      .post('/pharma/increase_stock', {username: 'wellcare_pharma', drugname: curDrug})
+      .post('/pharma/increase_stock', {
+        username: 'wellcare_pharma',
+        drugname: curDrug
+      })
       .then(async data => {
         getDrugData()
       })
@@ -85,15 +88,20 @@ const PharmPort = () => {
         <Table
           data={orderData}
           className='w-full'
-          keys={['_id','username', 'drugname', 'dose', 'amount']}
+          keys={['_id', 'username', 'drugname', 'dose', 'amount']}
           highlight={row => row._id == curOrder}
           onRowClick={r =>
-            r['_id'] == curOrder
-              ? setCurOrder('')
-              : setCurOrder(r['_id'])
+            r['_id'] == curOrder ? setCurOrder('') : setCurOrder(r['_id'])
           }
         />
-        <div onClick={() => sendOrder()} className='absolute top-0 right-0'>
+        <div onClick={() => sendOrder()} className='flex gap-4 absolute top-0 right-0'>
+          <div onClick={() => getOrderData()}>
+            <HeartMonitorButton
+              text='Refresh'
+              // disabled={page === 1}
+              color='#ff6b6b'
+            />
+          </div>
           <HeartMonitorButton
             text='Approve Order'
             disabled={curOrder === ''}
