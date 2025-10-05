@@ -18,6 +18,5 @@ def upload_audio():
     file = request.files['audio']
     recorded_text = text_to_speech.transcribe(file)
     speak_text = text_to_speech.query_gemini('bob', recorded_text)
-    response = requests.post("http://localhost:3000", {"status": "done"})
     text_to_speech.speak(speak_text)
-    return "pill"
+    return 200
