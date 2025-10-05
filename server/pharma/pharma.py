@@ -41,6 +41,20 @@ def approve_order():
     return
 
 
+@pharma.route("/increase_stock", methods=["POST"])
+def increase_stock_pharma():
+    data = request.get_json()
+    pharma_id = data["username"]
+    # TODO: add the function
+
+
+@pharma.route("/decrease_stock", methods=["POST"])
+def decrease_stock_pharma():
+    data = request.get_json()
+    pharma_id = data["username"]
+    # TODO: add the function
+
+
 @pharma.route("/get_stocks", methods=["POST"])
 def pharma_stocks():
     data = request.get_json()
