@@ -29,6 +29,15 @@ def upload_order(username, drugname, amount, description, schedule: list[str], d
                                "schedule": schedule, "dose": dose, "color": color, "ready": False})
     return str(result.inserted_id)
 
+def complete_order(id):
+    try:
+        obj_id = ObjectId(id)  # convert string → ObjectId
+    except Exception as e:
+        print("Invalid ID format:", e)
+        return None
+
+    order.update_one({"_id":obj_id}, {"ready":True})
+
 
 def get_order(id):
     # gets a specific order - can be used to approve orders?
