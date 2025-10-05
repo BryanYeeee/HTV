@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from pymongo.server_api import ServerApi
 
-load_dotenv()
+load_dotenv("../server/.env")
 
 # Replace with your Atlas connection string
 uri = os.getenv("MONGO_URI")

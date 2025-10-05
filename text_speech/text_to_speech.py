@@ -3,7 +3,6 @@ import pyaudio
 import pyttsx3
 import json
 from dotenv import load_dotenv
-import os
 from google import genai
 import datetime
 from text_speech.database_functions import get_user_info
@@ -13,7 +12,7 @@ import pygame
 
 
 load_dotenv("../server/.env")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+#GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client()
 
 # Initialize Vosk
@@ -102,7 +101,7 @@ def main():
         text = record_and_transcribe()
         if text.lower() in ["exit", "quit", "stop"]:
             break
-        response = query_gemini("riyan", text)
+        response = query_gemini("bob", text)
         speak(response)
 
 if __name__ == "__main__":
