@@ -5,7 +5,7 @@ import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { SplitText } from "gsap/SplitText"
 import { useGSAP } from "@gsap/react";
 import { useRef, useState, useMemo, useCallback } from "react";
-import { PillRender } from '@/app/scene'
+import { PillRender } from '@/components/scene'
 
 gsap.registerPlugin(ScrambleTextPlugin)
 gsap.registerPlugin(SplitText);

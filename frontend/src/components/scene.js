@@ -12,7 +12,7 @@ import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js'
 
 
 
-export const PillRender = forwardRef((props, ref) => {
+export const PillRender = forwardRef(({ topColor = 0xffaaaa, bottomColor = 0xffffff, radius = 0.5 }, ref) => {
     const containerRef = useRef()
     const pillRef = useRef(null);
     const stateRef = useRef("default");
@@ -74,7 +74,7 @@ export const PillRender = forwardRef((props, ref) => {
         function init(width, height) {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-            camera.position.z = 5;
+            camera.position.z = 3;
 
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setClearColor(0xFFFFFF, 0);
@@ -137,8 +137,8 @@ export const PillRender = forwardRef((props, ref) => {
             // const lowerMesh = new THREE.Mesh(lowerGeometry, lowerMaterial);
 
             pillRef.current = new THREE.Group();
-            loadCapsule(0.01, 0.5, 0xffaaaa, true)
-            loadCapsule(0.01, 0.5, 0xffffff, false)
+            loadCapsule(0.01, radius, topColor, true)
+            loadCapsule(0.01, radius, bottomColor, false)
 
 
             //pill.add(upperMesh);
@@ -450,8 +450,8 @@ export const PillRender = forwardRef((props, ref) => {
             composer?.dispose();
             outlinePass?.dispose();
             if (renderer?.domElement) renderer.domElement.removeEventListener("pointerdown", onMouseDown)
-            window.removeEventListener("pointermove", onMouseMove);
-            window.removeEventListener("pointerup", onMouseUp);
+            // window.removeEventListener("pointermove", onMouseMove);
+            // window.removeEventListener("pointerup", onMouseUp);
             cancelAnimationFrame(animationId);
             if (renderer && containerRef.current) {
                 renderer.dispose();
@@ -460,7 +460,7 @@ export const PillRender = forwardRef((props, ref) => {
             scene?.clear();
 
         };
-    }, [])
+    }, [topColor, bottomColor, radius])
 
     return (
         <div
