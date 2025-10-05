@@ -134,7 +134,7 @@ export default function Table ({
                   onClick={() => col.sortable !== false && toggleSort(col.key)}
                 >
                   <div className='flex items-center gap-2'>
-                    <span>{col.label ?? prettify(col.key)}</span>
+                    <span>{prettify(col.key)}</span>
                     {sortKey === col.key ? (
                       <span aria-hidden>{sortDir === 'asc' ? '▲' : '▼'}</span>
                     ) : col.sortable !== false ? (
@@ -164,7 +164,7 @@ export default function Table ({
                     key={i}
                     className={`box-border odd:bg-fore1 even:bg-fore2 hover:bg-accent1 cursor-pointer`}
                     style={
-                      row.name == curDrug?.name
+                      row.drugname == curDrug?.drugname
                         ? { backgroundColor: 'var(--accent1)', outline: '3px solid var(--accent2)' }
                         : {}
                     }
@@ -173,7 +173,7 @@ export default function Table ({
                     {inferredColumns.map(col => (
                       <td
                         key={col.key}
-                        className='px-3 py-2 align-top break-words max-w-[220px]'
+                        className='px-3 py-2 align-top break-words max-w-[220px] truncate'
                       >
                         {col.render
                           ? col.render(row[col.key], row)

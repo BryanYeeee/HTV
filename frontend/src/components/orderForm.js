@@ -1,5 +1,7 @@
 'use client'
 import { useState } from 'react'
+import HeartMonitorButton from '@/components/heartButton'
+import request from '@/utils/request'
 
 const OrderForm = () => {
   const [file, setFile] = useState(null)
@@ -31,7 +33,7 @@ const OrderForm = () => {
   }
 
   const handleSubmit = async e => {
-    e.preventDefault() // stop page refresh
+    // e.preventDefault() // stop page refresh
     if (!file) {
       alert('Please upload a file before submitting.')
       return
@@ -39,7 +41,13 @@ const OrderForm = () => {
 
     const formData = new FormData()
     formData.append('file', file)
-    
+
+    const res = request.post('/user/new_order', {
+      body: formData
+    }).then(res => {
+      console.log('WE DO IT', res)
+    })
+
     // try {
     //   const res = await fetch('http://localhost:5000/upload', {
     //     method: 'POST',
@@ -59,12 +67,15 @@ const OrderForm = () => {
   return (
     <div className='h-full border p-6 space-y-6'>
       <div className='text-sm text-muted-foreground'>
-        Please upload an image of the prescription (.png, .jpg, .jpeg, .gif, .webp, .bmp, .tiff, .pdf).
+        Please upload an image of the prescription (.png, .jpg, .jpeg, .gif,
+        .webp, .bmp, .tiff, .pdf).
       </div>
 
-      <form className='flex flex-col space-y-4' onSubmit={handleSubmit}>
+      <form
+        className='flex flex-col space-y-4 items-center'
+      >
         <div
-          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition 
+          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition w-full
             ${isDragging ? 'border-accent1 bg-accent1/10' : 'border-border'}`}
           onDragOver={e => {
             e.preventDefault()
@@ -105,13 +116,13 @@ const OrderForm = () => {
           />
         </div>
 
-        {/* Submit button */}
-        <button
-          type='submit'
-          className='px-4 py-2 bg-accent1 text-white rounded-lg hover:bg-accent1/80 transition'
-        >
-          Submit Order
-        </button>
+          <div onClick={() => handleSubmit()}>
+            <HeartMonitorButton
+              text='Submit Order'
+              color='#ff6b6b'
+              className='w-60'
+            />
+          </div>
       </form>
     </div>
   )

@@ -45,14 +45,14 @@ export function scheduleFromData(data) {
   clearNotifications()
 
   data.forEach((drug) => {
-    drug.schedules.forEach((entry) => {
+    drug.schedule.forEach((entry) => {
       const [dayStr, timeStr] = entry.split('_')
       const dayIndex = parseInt(dayStr, 10)
       const hour = parseInt(timeStr.substring(0, 2), 10)
 
-      const id = `${drug.name}-${dayIndex}-${hour}`
+      const id = `${drug.drugname}-${dayIndex}-${hour}`
 
-      scheduleNotification(id, dayIndex, hour, `Take ${drug.name} 💊`, {
+      scheduleNotification(id, dayIndex, hour, `Take ${drug.drugname} 💊`, {
         body: drug.description
       })
     })
