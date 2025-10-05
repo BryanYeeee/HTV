@@ -1,5 +1,5 @@
 from .hasher import h_login, h_signup
-from .database_functions import get_stocks
+from .database_functions import get_stocks, increase_stock
 from flask import Blueprint, jsonify, request
 import requests
 
@@ -35,24 +35,16 @@ def signup():
 def approve_order():
     data = request.get_json()
     order_id = data["order_id"]
-    requests.post("http://localhost:8080/order/")
-
-
+    approve_order(order_id)
     return
 
 
 @pharma.route("/increase_stock", methods=["POST"])
 def increase_stock_pharma():
     data = request.get_json()
-    pharma_id = data["username"]
-    # TODO: add the function
-
-
-@pharma.route("/decrease_stock", methods=["POST"])
-def decrease_stock_pharma():
-    data = request.get_json()
-    pharma_id = data["username"]
-    # TODO: add the function
+    pharma_id, drugname = data["username"], data["drugname"]
+    increase_stock(pharma_id, drugname)
+    return
 
 
 @pharma.route("/get_stocks", methods=["POST"])
