@@ -1,6 +1,5 @@
 from flask import Blueprint, request
 from text_speech import text_to_speech
-from text_speech.text_to_speech import query_gemini
 
 audio = Blueprint("audio", __name__)
 
