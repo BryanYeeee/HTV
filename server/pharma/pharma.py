@@ -1,4 +1,5 @@
 from .hasher import h_login, h_signup
+from .database_functions import get_stocks
 from flask import Blueprint, jsonify, request
 import requests
 
@@ -36,3 +37,10 @@ def approve_order():
 
     return
 
+
+@pharma.route("/get_stocks", methods=["POST"])
+def pharma_stocks():
+    data = request.get_json()
+    username = data["username"]
+    response = jsonify(get_stocks(username))
+    return response
