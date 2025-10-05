@@ -19,4 +19,4 @@ def upload_audio():
     recorded_text = text_to_speech.transcribe(file)
     speak_text = text_to_speech.query_gemini('bob', recorded_text)
     text_to_speech.speak(speak_text)
-    return 200
+    return "200"
