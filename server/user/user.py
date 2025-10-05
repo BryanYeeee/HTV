@@ -18,7 +18,7 @@ def login():
     password = data["password"]
     verify = h_login(username, password)
     if verify:
-        response = jsonify({"response": "good login"})
+        response = jsonify({"type": "user"})
         return response
 
     response = jsonify({"response": "bad login"})

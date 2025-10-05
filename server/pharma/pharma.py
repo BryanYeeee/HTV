@@ -15,8 +15,11 @@ def user_index():
 def login():
     data = request.get_json()
     username, password = data["username"], data["password"]
-    h_login(username, password)
-    response = jsonify({"response": "good login"})
+    verify = h_login(username, password)
+    if verify:
+        response = jsonify({"type": "pharma"})
+        return response
+    response = jsonify(({"response": "bad login"}))
     return response
 
 
