@@ -12,7 +12,7 @@ export default function Table ({
   keys = null,
   className = '',
   numRows = 10,
-  curDrug,
+  highlight= () =>{},
   onRowClick
 }) {
   const inferredColumns = useMemo(() => {
@@ -164,7 +164,7 @@ export default function Table ({
                     key={i}
                     className={`box-border odd:bg-fore1 even:bg-fore2 hover:bg-accent1 cursor-pointer`}
                     style={
-                      row.drugname == curDrug?.drugname
+                      highlight(row)
                         ? { backgroundColor: 'var(--accent1)', outline: '3px solid var(--accent2)' }
                         : {}
                     }

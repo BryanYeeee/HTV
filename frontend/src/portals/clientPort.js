@@ -23,7 +23,7 @@ const ClientPort = () => {
 
   const getDrugData = () => {
     request
-      .post('/user/get_drugs', { username: 'riyan' })
+      .post('/user/get_drugs', { username: Cookies.get('username') })
       .then(async data => {
         console.log('LFGGGG', data)
         setDrugData(data)
@@ -108,7 +108,7 @@ const ClientPort = () => {
             <Table
               data={drugData}
               keys={['drugname', 'description', 'amount']}
-              curDrug={curDrug}
+              highlight={row => row.drugname == curDrug?.drugname}
               onRowClick={setCurDrug}
               className='h-full'
             />,
