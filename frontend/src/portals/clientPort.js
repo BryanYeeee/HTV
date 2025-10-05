@@ -36,6 +36,19 @@ const ClientPort = () => {
       .catch(err => console.error('Failed to fetch drugs:', err))
   }
 
+  const subtractData = drugname => {
+    setPopup(null)
+    request
+      .post('/user/subtract', {
+        username: Cookies.get('username'),
+        drugname: drugname
+      })
+      .then(async data => {
+        getDrugData()
+      })
+      .catch(err => console.error('Failed to fetch drugs:', err))
+  }
+
   useEffect(() => {
     getDrugData()
   }, [])
@@ -49,7 +62,7 @@ const ClientPort = () => {
             <p className='text-2xl text-gray-700 mb-12 max-w-100 break-words '>
               {popup.body}
             </p>
-            <div onClick={() => setPopup(null)}>
+            <div onClick={() => subtractData(popup.title.split(' ')[1])}>
               <HeartMonitorButton
                 text='I TOOK IT :D'
                 color='#ff6b6b'
@@ -144,7 +157,7 @@ const ClientPort = () => {
                   <PillRender
                     topColor={curDrug?.properties?.[1] || '#000000'}
                     bottomColor={curDrug?.properties?.[2] || '#000000'}
-                    radius={(curDrug?.properties?.[0]+1)*0.5 || 1}
+                    radius={(curDrug?.properties?.[0] + 1) * 0.5 || 1}
                     curDrug={curDrug}
                   />
                 </div>

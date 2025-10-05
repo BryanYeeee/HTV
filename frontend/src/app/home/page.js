@@ -5,6 +5,8 @@ import PharmPort from '@/portals/pharmPort'
 import { ThpaceGL } from 'thpace'
 import Cookies from 'js-cookie';
 
+import VoiceChatbot from "@/components/chatBot";
+
 const Home = () => {
   const canvasRef = useRef(null)
 
@@ -45,7 +47,9 @@ const Home = () => {
         {type == "admin" ? (<PharmPort />) : (<ClientPort />)}
         
         {/* <PharmPort /> if you need it */}
-      </div>
+      </div>     
+       <VoiceChatbot />
+
     </>
   )
 }
