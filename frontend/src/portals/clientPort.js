@@ -9,6 +9,9 @@ import Table from '@/components/Table'
 import OrderForm from '@/components/orderForm'
 import request from '@/utils/request'
 
+import { scheduleFromData } from '@/utils/scheduler'
+import { notify } from '@/utils/notify'
+
 const ClientPort = () => {
   const [leftIndex, setLeftIndex] = useState(0)
   const [rightIndex, setRightIndex] = useState(0)
@@ -18,9 +21,9 @@ const ClientPort = () => {
     model: ['rgb(255, 182, 193)']
   })
   const [drugData, setDrugData] = useState([
-    { name: 'D', remain: 120, 
+    { name: 'D', remain: 120, description: '12313221321321123231321321321321321321321321312321321321321',
       schedules: [
-        '0_0700',
+        '5_2100',
         '1_0700',
         '2_0700',
         '3_0700',
@@ -28,16 +31,21 @@ const ClientPort = () => {
         '5_0700',
         '6_0700'
       ], model: ['rgb(255, 182, 193)'] },
-    { name: 'A', remain: 120, schedules: ['1_1400', '3_1400', '5_1400'], model: ['rgb(114, 208, 124)'] },
-    { name: 'B', remain: 120, schedules: ['0_1300', '2_1300', '4_1300', '2_1600'], model: ['rgb(144, 255, 144)'] },
-    { name: 'C', remain: 120, schedules: [], model: ['rgb(255, 182, 193)'] }
+    { name: 'A', remain: 120, description: '12313221321321123231321321321321321321321321312321321321321',schedules: ['1_1400', '3_1400', '5_1400'], model: ['rgb(114, 208, 124)'] },
+    { name: 'B', remain: 120, description: '12313221321321123231321321321321321321321321312321321321321',schedules: ['0_1300', '2_1300', '4_1300', '2_1600'], model: ['rgb(144, 255, 144)'] },
+    { name: 'C', remain: 120, description: '12313221321321123231321321321321321321321321312321321321321',schedules: [], model: ['rgb(255, 182, 193)'] }
   ])
 
   useEffect(() => {
-    request
-      .get('/')
-      .then(data => {console.log('LFGGGG')})
-      .catch(err => console.error('Failed to fetch drugs:', err))
+    // request
+    //   .get('/')
+    //   .then(data => {console.log('LFGGGG')})
+    //   .catch(err => console.error('Failed to fetch drugs:', err))useEffect(() => {
+    // Reset old timers when schedule changes
+    // request.get('/user/drugs').then((data) => {
+      // data is your array of {name, schedules, description, ...}
+      scheduleFromData(drugData)
+    // })
   }, [])
 
   return (
@@ -76,7 +84,7 @@ const ClientPort = () => {
             <TimeTable data={drugData} numRows={18} onDrugClick={setCurDrug} />,
             <Table
               data={drugData}
-              keys={['name', 'remain']}
+              keys={['name', 'description', 'remain']}
               curDrug={curDrug}
               onRowClick={setCurDrug}
               className='h-full'
