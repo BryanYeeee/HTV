@@ -16,5 +16,5 @@ def upload_audio():
 
     file = request.files['audio']
     # Save it to disk
-    file.save("uploaded_audio.mp3")  # or file.filename if you prefer
+    file.save("./audio/uploaded_audio.mp3")  # or file.filename if you prefer
     return "Audio received and saved!"
