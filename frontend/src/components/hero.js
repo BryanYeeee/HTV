@@ -198,7 +198,7 @@ const Hero = ({ pages }) => {
             <canvas
                 id='bg'
                 ref={canvasRef}
-                className='fixed top-0 left-0 w-full h-full z-0'
+                className='fixed top-0 left-0 w-full h-full -z-0'
             />
             <div ref={heroRef} className="relative w-full h-screen flex flex-col select-none">
                 <div id="title" className="flex flex-col w-full h-full absolute">
@@ -207,7 +207,7 @@ const Hero = ({ pages }) => {
                         <svg
                             id="heartbeat-line"
                             className="absolute top-1/4 left-0 w-full h-1/2 pointer-events-none z-0"
-                            viewBox="0 0 1000 100"
+                            viewBox="0 0 500 100"
                             preserveAspectRatio="none"
                         >
                             <path

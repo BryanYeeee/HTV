@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import HeartMonitorButton from '@/components/heartButton'
 import request from '@/utils/request'
+import Cookies from 'js-cookie'
 
 const OrderForm = () => {
   const [file, setFile] = useState(null)
@@ -32,37 +33,31 @@ const OrderForm = () => {
     }
   }
 
-  const handleSubmit = async e => {
-    // e.preventDefault() // stop page refresh
-    if (!file) {
-      alert('Please upload a file before submitting.')
-      return
-    }
+  const handleSubmit = async () => {
+  if (!file) {
+    alert('Please upload a file before submitting.')
+    return
+  }
 
-    const formData = new FormData()
-    formData.append('file', file)
+  const formData = new FormData()
+  formData.append("file", file, file.name)   // file
+  formData.append("username", Cookies.get("username")) // text field
 
-    const res = request.post('/user/new_order', {
-      body: formData
-    }).then(res => {
-      console.log('WE DO IT', res)
+  try {
+    const res = await fetch("http://localhost:8080/user/new_order", {
+      method: "POST",
+      body: formData,
     })
 
-    // try {
-    //   const res = await fetch('http://localhost:5000/upload', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-
-    //   if (!res.ok) throw new Error('Upload failed')
-    //   const data = await res.json()
-    //   console.log('✅ Upload success:', data)
-    //   alert('File uploaded successfully!')
-    // } catch (err) {
-    //   console.error(err)
-    //   alert('Upload failed.')
-    // }
+    if (!res.ok) throw new Error("Upload failed")
+    const data = await res.json()
+    console.log("✅ Upload success:", data)
+    alert("File uploaded successfully!")
+  } catch (err) {
+    console.error("❌ Upload failed:", err)
+    alert("Upload failed.")
   }
+}
 
   return (
     <div className='h-full border p-6 space-y-6'>
@@ -71,9 +66,7 @@ const OrderForm = () => {
         .webp, .bmp, .tiff, .pdf).
       </div>
 
-      <form
-        className='flex flex-col space-y-4 items-center'
-      >
+      <form className='flex flex-col space-y-4 items-center'>
         <div
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition w-full
             ${isDragging ? 'border-accent1 bg-accent1/10' : 'border-border'}`}
@@ -116,13 +109,13 @@ const OrderForm = () => {
           />
         </div>
 
-          <div onClick={() => handleSubmit()}>
-            <HeartMonitorButton
-              text='Submit Order'
-              color='#ff6b6b'
-              className='w-60'
-            />
-          </div>
+        <div onClick={() => handleSubmit()}>
+          <HeartMonitorButton
+            text='Submit Order'
+            color='#ff6b6b'
+            className='w-60'
+          />
+        </div>
       </form>
     </div>
   )

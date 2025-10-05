@@ -38,7 +38,11 @@ const PharmPort = () => {
   const sendOrder = () => {
     setCurOrder('')
     request
-      .get('/order/list_orders')
+      .post('/pharma/approve', {
+        order_id: curOrder,
+        username: Cookies.get('username'),
+
+      })
       .then(async data => {
         getDrugData()
       })

@@ -1,10 +1,32 @@
-from .database_functions import upload_drug, get_drugs
+from .database_functions import get_drugs
 from .hasher import h_login, h_signup
 from flask import Blueprint, jsonify, request
 from .ocr import parse_text
+import certifi
+from bson import ObjectId
+from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+from pymongo.server_api import ServerApi
 
+load_dotenv()
+
+# Replace with your Atlas connection string
+uri = os.getenv("MONGO_URI")
+
+# Create a connection
+client = MongoClient(uri, tlsCAFile=certifi.where(), server_api=ServerApi('1'))
+
+# Create or switch to a database
+db = client["selfPharma"]
+order = db["orders"]
 user = Blueprint("user", __name__)
 
+def upload_order(username, drugname, amount, description, schedule: list[str], dose, color):
+    # create a new order
+    result = order.insert_one({"username": username, "drugname": drugname, "amount": amount, "description": description,
+                               "schedule": schedule, "dose": dose, "color": color, "ready": False})
+    return str(result.inserted_id)
 
 @user.route("/")
 def user_index():
@@ -35,12 +57,16 @@ def signup():
 
 @user.route("/new_order", methods=["POST", "OPTIONS"])
 def send_prescription():
-    # recieves image in mime type
-    
-    if "file" not in request.files:
-        return "No file uploaded", 400
-    
-    file = request.files["file"]
+    print("Content-Type:", request.content_type)
+    print("Form keys:", request.form.keys())
+    print("Files keys:", request.files.keys())
+    # recieves image in mime type     
+    file = request.files.get("file")
+    username = request.form.get("username")
+    print(username, file)
+
+    if not file:
+        return {"error": "No file uploaded"}, 400
     # Check mimetype (e.g., "image/jpeg", "image/png")
     mimetype = file.mimetype
     filename = file.filename
@@ -50,7 +76,11 @@ def send_prescription():
     response = parse_text()
 
     for drug in response:
-        upload_drug("riyan", drug, 10)
+        drugname = drug["name"]
+        amount = drug["count"]
+        description = drug["description"]
+        schedule = drug["schedule"]
+        upload_order(username, drugname, amount, description, schedule, drug["dosage"], drug["property"])
 
     return "good"
     # return {"filename": filename, "mimetype": mimetype}, 200
