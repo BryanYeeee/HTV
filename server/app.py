@@ -3,8 +3,10 @@ from audio.audio import audio
 from pharma.pharma import pharma
 from order.order import order
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(audio, url_prefix="/audio")
 app.register_blueprint(user, url_prefix="/user")
 app.register_blueprint(pharma, url_prefix="/pharma")
