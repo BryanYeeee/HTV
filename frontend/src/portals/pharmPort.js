@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import Graph from '@/components/graph'
+// import Cookies from 'js-cookie'
 
 import HeartMonitorButton from '@/components/heartButton'
 import Switcher from '@/components/switcher'
@@ -11,11 +12,12 @@ const PharmPort = () => {
   // const [leftIndex, setLeftIndex] = useState(0)
   const [drugData, setDrugData] = useState([])
   const [orderData, setOrderData] = useState([])
-  const [curOrder, setCurOrder] = useState("")
+  const [curOrder, setCurOrder] = useState('')
+  const [curDrug, setCurDrug] = useState('')
 
   const getDrugData = () => {
     request
-      .post('/user/get_drugs', { username: 'riyan' })
+      .post('/pharma/get_stocks', { username: 'wellcare_pharma'})
       .then(async data => {
         console.log('LFGGGG', data)
         setDrugData(data)
@@ -33,19 +35,72 @@ const PharmPort = () => {
       .catch(err => console.error('Failed to fetch orders:', err))
   }
 
+  const sendOrder = () => {
+    setCurOrder('')
+    request
+      .get('/order/list_orders')
+      .then(async data => {
+        getDrugData()
+      })
+      .catch(err => console.error('Failed to fetch orders:', err))
+  }
+
+  const addStock = () => {
+    request
+      .post('/pharma/increase_stock', {username: 'wellcare_pharma', drugname: curDrug})
+      .then(async data => {
+        getDrugData()
+      })
+      .catch(err => console.error('Failed to fetch orders:', err))
+  }
+
   useEffect(() => {
     getDrugData()
     getOrderData()
   }, [])
 
   return (
-    <div className='bg flex justify-around items-center h-screen p-12 gap-12'>
-      <Table
-        data={drugData}
-        keys={['drugname', 'description', 'amount']}
-        className='w-1/2'
-      />
-      <Table data={orderData} className='w-1/2' onRowClick={(r) => setCurOrder(r['_id'])}/>
+    <div className='relative flex justify-around items-center h-screen p-12 gap-12'>
+      <div className='relative w-1/2'>
+        <Table
+          data={drugData}
+          keys={['drugname', 'description', 'amount']}
+          className='w-full'
+          highlight={row => row.drugname == curDrug}
+          onRowClick={r =>
+            r['drugname'] == curDrug
+              ? setCurDrug('')
+              : setCurDrug(r['drugname'])
+          }
+        />
+        <div onClick={() => addStock()} className='absolute top-0 right-0'>
+          <HeartMonitorButton
+            text='Add Stock'
+            disabled={curDrug === ''}
+            color='#ff6b6b'
+          />
+        </div>
+      </div>
+      <div className='relative w-1/2'>
+        <Table
+          data={orderData}
+          className='w-full'
+          keys={['_id','username', 'drugname', 'dose', 'amount']}
+          highlight={row => row._id == curOrder}
+          onRowClick={r =>
+            r['_id'] == curOrder
+              ? setCurOrder('')
+              : setCurOrder(r['_id'])
+          }
+        />
+        <div onClick={() => sendOrder()} className='absolute top-0 right-0'>
+          <HeartMonitorButton
+            text='Approve Order'
+            disabled={curOrder === ''}
+            color='#ff6b6b'
+          />
+        </div>
+      </div>
       {/* <div className='absolute top-0'>
         <div onClick={() => setLeftIndex((leftIndex + 1) % 2)}>CLICK</div>
       </div> */}
