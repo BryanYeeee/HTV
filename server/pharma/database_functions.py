@@ -77,12 +77,16 @@ def upload_drug(username, input:dict, threshold):
                       "dose": input["dosage"], "threshold": threshold, "properties": input["property"]}}})
 
 
-def approve_order(id: str):
+def approve_order(id: str, username):
     result = get_order(id)
     if not result:
         return False
 
-    username = result["username"]
+    result["name"] = result["drugname"]
+    result["count"] = result["amount"]
+    result["dosage"] = result["dose"]
+    result["property"] = result["color"]
+    user_username = result["username"]
     drugname = result["drugname"]
     amount = result["amount"]
     schedule = result["schedule"]
@@ -93,7 +97,7 @@ def approve_order(id: str):
 
     threshold = int(doses_per_day * 3)
 
-    upload_drug(username, result, threshold)
+    upload_drug(user_username, result, threshold)
     decrease_stock(username, drugname, amount)
     completed_order(id)
     return True
