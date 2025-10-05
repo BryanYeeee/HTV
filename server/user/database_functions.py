@@ -39,8 +39,3 @@ def upload_drug(username, input:dict, threshold):
 def get_drugs(username):
     results = user.find_one({"username": username})
     return results["drugs"]
-
-
-def confirm_order(username):
-    # TODO: update username with ready tag
-    return

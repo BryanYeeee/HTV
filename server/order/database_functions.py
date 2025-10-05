@@ -26,7 +26,7 @@ def delete():
 def upload_order(username, drugname, amount, description, schedule: list[str], dose, color):
     # create a new order
     result = order.insert_one({"username": username, "drugname": drugname, "amount": amount, "description": description,
-                               "schedule": schedule, "dose": dose, "color": color})
+                               "schedule": schedule, "dose": dose, "color": color, "ready": False})
     return str(result.inserted_id)
 
 
@@ -46,3 +46,6 @@ def get_orders():
     # list of all orders
     result = order.find({})
     return result
+
+def completed_order(id):
+    order.update_one({"_id": ObjectId(id)}, {"$set": {"ready": True}})

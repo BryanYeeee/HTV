@@ -12,7 +12,7 @@ import io
 import pygame
 
 
-load_dotenv()
+load_dotenv("../server/.env")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client()
 
