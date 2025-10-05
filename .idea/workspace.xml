@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c1064b5-2e38-4b60-b8ad-fe3dd6544dd1" name="Changes" comment="completed order">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0c1064b5-2e38-4b60-b8ad-fe3dd6544dd1" name="Changes" comment="completed order" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +53,7 @@
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.database_functions">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="HTV" />
       <option name="ENV_FILES" value="" />
@@ -121,9 +119,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.database_functions" />
-        <item itemvalue="Python.database_functions" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.database_functions" />
+        <item itemvalue="Python.database_functions" />
         <item itemvalue="Python.text_to_speech" />
       </list>
     </recent_temporary>

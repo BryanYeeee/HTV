@@ -29,7 +29,7 @@ def upload_order(username, drugname, amount, description, schedule: list[str], d
                                "schedule": schedule, "dose": dose, "color": color, "ready": False})
     return str(result.inserted_id)
 
-def complete_order(id):
+def completed_order(id):
     try:
         obj_id = ObjectId(id)  # convert string → ObjectId
     except Exception as e:
