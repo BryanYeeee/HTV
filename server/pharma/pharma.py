@@ -11,7 +11,7 @@ def user_index():
     return "hello pharma"
 
 
-@pharma.route("/login")
+@pharma.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
     username, password = data["username"], data["password"]
