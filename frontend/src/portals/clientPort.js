@@ -37,7 +37,7 @@ const ClientPort = () => {
   }
 
   useEffect(() => {
-    // getDrugData()
+    getDrugData()
   }, [])
 
   return (
@@ -144,7 +144,7 @@ const ClientPort = () => {
                   <PillRender
                     topColor={curDrug?.properties?.[1] || '#000000'}
                     bottomColor={curDrug?.properties?.[2] || '#000000'}
-                    radius={curDrug?.properties?.[0] || 0}
+                    radius={(curDrug?.properties?.[0]+1)*0.5 || 1}
                     curDrug={curDrug}
                   />
                 </div>

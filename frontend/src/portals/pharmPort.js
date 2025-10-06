@@ -45,6 +45,7 @@ const PharmPort = () => {
       })
       .then(async data => {
         getDrugData()
+        getOrderData()
       })
       .catch(err => console.error('Failed to fetch orders:', err))
   }
