@@ -1,13 +1,14 @@
 import easyocr
 from google import genai
 from dotenv import load_dotenv
+import json
 
 load_dotenv('../.env')
 
 reader = easyocr.Reader(['en'])
 
 # Run OCR on an image
-results = reader.readtext('prescription-template.png')
+results = reader.readtext('./user/prescription.png')
 
 # Print out detected text
 ocr_text = ""
@@ -51,15 +52,21 @@ Each element must be a JSON object with this structure:
   "property": [int, "rgb(R, G, B)", "rgb(R, G, B)"]
 }}
 """
-
-# The client gets the API key from the environment variable `GEMINI_API_KEY`.
 client = genai.Client()
 
-response = client.models.generate_content(
-    model="gemini-2.5-flash", contents=f'{PRMOMPT}'
-)
-print(response.text)
 
+def parse_text():
 
+    response = client.models.generate_content(
+        model="gemini-2.5-flash", contents=f'{PRMOMPT}'
+    )
 
+    text = response.text.strip()
+    if text.startswith("```json"):
+        # Remove the markdown wrapping
+        text = text[len("```json"):].strip()
+        if text.endswith("```"):
+            text = text[:-3].strip()
+    response = json.loads(text)
 
+    return response
