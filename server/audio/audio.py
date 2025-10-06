@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-# from text_speech import text_to_speech
+from text_speech import text_to_speech
 import requests
 
 audio = Blueprint("audio", __name__)
@@ -16,7 +16,9 @@ def upload_audio():
         return "No audio file part", 400
 
     file = request.files['audio']
+    username = request.form.get('username')
     recorded_text = text_to_speech.transcribe(file)
-    speak_text = text_to_speech.query_gemini('bob', recorded_text)
+    print(recorded_text)
+    speak_text = text_to_speech.query_gemini(username, recorded_text)
     text_to_speech.speak(speak_text)
     return "200"

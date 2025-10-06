@@ -14,7 +14,7 @@ import pygame
 
 
 load_dotenv("../server/.env")
-#GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client()
 
 # Initialize Vosk

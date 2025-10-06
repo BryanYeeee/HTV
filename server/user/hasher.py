@@ -15,4 +15,3 @@ def h_login(username, password):
     hashed = check_user(username)
     verify = phash.verify(hashed, password)
     return verify
-
