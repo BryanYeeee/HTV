@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default function VoiceChatbot() {
   const [isRecording, setIsRecording] = useState(false);
@@ -153,16 +154,11 @@ export default function VoiceChatbot() {
 
     const formData = new FormData();
     formData.append("audio", blob, "recording.webm");
+    formData.append("username", Cookies.get('username'));
 
     try {
       // use request helper that supports FormData
       const res = await request.post("/audio/upload_audio", formData, { responseType: "blob" });
-      // note: if your request helper signature doesn't accept 3rd param, you can switch to fetch:
-      // const raw = await fetch("http://localhost:5000/query_audio", { method: "POST", body: formData });
-      // const audioBlob = await raw.blob();
-
-      // if using axios wrapper: res is the parsed data. If your wrapper returns data directly, adapt accordingly.
-      // assume res is a Blob (because we used responseType:'blob')
       const audioBlob = res instanceof Blob ? res : new Blob([res]);
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);

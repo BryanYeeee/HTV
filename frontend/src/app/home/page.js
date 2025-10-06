@@ -4,6 +4,8 @@ import ClientPort from '@/portals/clientPort'
 import PharmPort from '@/portals/pharmPort'
 import { ThpaceGL } from 'thpace'
 import Cookies from 'js-cookie';
+import VoiceChatbot from "@/components/chatBot";
+
 
 const Home = () => {
   const canvasRef = useRef(null)
@@ -43,6 +45,7 @@ const Home = () => {
       />
       <div className='relative z-10'>
         {type == "admin" ? (<PharmPort />) : (<ClientPort />)}
+        <VoiceChatbot />
         
         {/* <PharmPort /> if you need it */}
       </div>
