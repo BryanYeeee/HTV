@@ -7,6 +7,8 @@ import Cookies from 'js-cookie';
 import VoiceChatbot from "@/components/chatBot";
 
 
+import VoiceChatbot from "@/components/chatBot";
+
 const Home = () => {
   const canvasRef = useRef(null)
 
@@ -48,7 +50,9 @@ const Home = () => {
         <VoiceChatbot />
         
         {/* <PharmPort /> if you need it */}
-      </div>
+      </div>     
+       <VoiceChatbot />
+
     </>
   )
 }
