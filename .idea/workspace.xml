@@ -7,11 +7,6 @@
     <list default="true" id="0c1064b5-2e38-4b60-b8ad-fe3dd6544dd1" name="Changes" comment="completed order">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/home/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/home/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatBot.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatBot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/audio/audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/audio/audio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/user/hasher.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/user/hasher.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text_speech/text_to_speech.py" beforeDir="false" afterPath="$PROJECT_DIR$/text_speech/text_to_speech.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +53,7 @@
     "Python.hasher.executor": "Run",
     "Python.text_to_speech.executor": "Run",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#2 on master",
+    "git-widget-placeholder": "master",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
@@ -90,6 +85,9 @@
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/user" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -109,6 +107,9 @@
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/user" />
       <option name="IS_MODULE_SDK" value="true" />

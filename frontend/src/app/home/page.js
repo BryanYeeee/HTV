@@ -6,9 +6,6 @@ import { ThpaceGL } from 'thpace'
 import Cookies from 'js-cookie';
 import VoiceChatbot from "@/components/chatBot";
 
-
-import VoiceChatbot from "@/components/chatBot";
-
 const Home = () => {
   const canvasRef = useRef(null)
 
