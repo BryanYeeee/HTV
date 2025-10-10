@@ -43,7 +43,7 @@ const ClientPort = () => {
         username: Cookies.get('username'),
         drugname: drugname
       })
-      .then(async data => {
+      .then(data => {
         getDrugData()
       })
       .catch(err => console.error('Failed to fetch drugs:', err))

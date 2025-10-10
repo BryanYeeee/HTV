@@ -48,14 +48,13 @@ const OrderForm = () => {
       method: "POST",
       body: formData,
     })
-
     if (!res.ok) throw new Error("Upload failed")
     const data = await res.json()
     console.log("✅ Upload success:", data)
     alert("File uploaded successfully!")
   } catch (err) {
     console.error("❌ Upload failed:", err)
-    alert("Upload failed.")
+    // alert("Upload failed.")
   }
 }
 

@@ -8,7 +8,7 @@ load_dotenv('../.env')
 reader = easyocr.Reader(['en'])
 
 # Run OCR on an image
-results = reader.readtext('./user/prescription.png')
+results = reader.readtext('./prescription.png')
 
 # Print out detected text
 ocr_text = ""
@@ -33,6 +33,7 @@ Instructions:
    - **schedule**: a list of times in the format "X_TIME" where:
      - X = day index (0 = Monday, 1 = Tuesday, …, 6 = Sunday)
      - TIME = 24-hour time in 4-digit format (between 0700 and 2400 only)
+     - the generated "X_TIME" should always be unique, across the list and across the 2-3 medicines
    - **dosage**: integer (number of pills per intake, not mg)
    - **duration**: integer (number of weeks, between 1–4)
    - **count** = dosage × number of schedule entries × duration × 7
